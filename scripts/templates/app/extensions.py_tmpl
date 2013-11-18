@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    {{project}}.configs.extensions
+    {{project}}.extensions
     {{separator}}
 
     Extensions.

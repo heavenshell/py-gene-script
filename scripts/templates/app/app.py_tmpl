@@ -19,7 +19,7 @@ from flaskext.kvsession import KVSessionExtension
 from simplekv.memory import DictStore
 from plugpy import load_plugins
 from {{project}}.configs.settings import Settings
-from {{project}}.configs.extensions import cache
+from {{project}}.extensions import cache
 from {{project}}.models.meta import init_engine, Session
 from {{project}}.views import views
 
