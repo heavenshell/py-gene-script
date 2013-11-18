@@ -1,0 +1,107 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.core.test_meta
+    {{separator}}
+
+    DB meta tests.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import os
+from unittest import TestCase
+from sqlalchemy import Column, Integer, String
+from {{project}}.configs.settings import Settings
+from {{project}}.app import create_app
+from {{project}}.models.meta import Session, Base, get_engine, create, reset
+
+
+class TestMultiSettings(Settings):
+    SQLALCHEMY_DATABASE_URI = {
+        'default': 'sqlite:///master.db',
+        'slave': 'sqlite:///slave.db',
+    }
+    SQLALCHEMY_ECHO = False
+
+
+class Person(Base):
+    __tablename__ = 'people'
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(100), nullable=False)
+
+
+class EngineTest(TestCase):
+    def setUp(self):
+        config = TestMultiSettings()
+        self.app = create_app(config=config)
+
+    def tearDown(self):
+        Session.remove()
+
+    def test_init_engine(self):
+        """ DB engine should create when create_app() loaded. """
+        self.assertEqual(str(get_engine().url), 'sqlite:///master.db')
+        self.assertEqual(str(get_engine('slave').url), 'sqlite:///slave.db')
+
+    def test_create_engine(self):
+        """ meta.create() should create DB engine. """
+        uri = 'sqlite:///master.db'
+        pool_recycle = 3600
+        engine = create(uri, echo=False, pool_recycle=pool_recycle)
+        self.assertEqual(str(engine.url), 'sqlite:///master.db')
+
+
+class BaseTest(TestCase):
+    def setUp(self):
+        config = TestMultiSettings()
+        self.app = create_app(config=config)
+
+    def tearDown(self):
+        Session.remove()
+        reset()
+        if os.path.exists('./master.db'):
+            os.remove('./master.db')
+
+        if os.path.exists('./slave.db'):
+            os.remove('./slave.db')
+
+    def test_model_insert(self):
+        """ Insert data from model. """
+        Base.metadata.create_all()
+        foo = Person(id=1, first_name='foo')
+        bar = Person(id=2, first_name='bar')
+
+        Session.add_all([foo, bar])
+        Session.commit()
+
+        row = Session.query(Person).filter(Person.id==1).one()
+        self.assertEqual(row.first_name, foo.first_name)
+
+    def test_model_find(self):
+        """ Find data by using model. """
+        Base.metadata.create_all()
+        foo = Person(id=1, first_name='foo')
+        bar = Person(id=2, first_name='bar')
+
+        Session.add_all([foo, bar])
+        Session.commit()
+
+        rows = Session.query(Person).all()
+        self.assertEqual(rows[0].first_name, foo.first_name)
+        self.assertEqual(rows[1].first_name, bar.first_name)
+
+    def test_slave_engine(self):
+        """ Insert to another database. """
+        engine = get_engine('slave')
+        Base.metadata.bind = get_engine('slave')
+        Base.metadata.create_all()
+
+        foo = Person(id=1, first_name='foo')
+        bar = Person(id=2, first_name='bar')
+
+        Session.configure(bind=engine)
+        Session.add_all([foo, bar])
+        Session.commit()
+
+        row = Session.query(Person).filter(Person.id==1).one()
+        self.assertEqual(row.first_name, foo.first_name)

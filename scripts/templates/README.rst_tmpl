@@ -1,0 +1,110 @@
+{{project}}
+{{separator}}
+
+Run server
+----------
+
+manage.py would support server commands. ::
+
+  $ python manage.py runserver
+
+.. note::
+  This command will run built-in web server as port 7777 with debug options.
+  Built-in web server is just for development. Do not use in productions.
+
+Using in productions, use `Supervisor <http://supervisord.org/>_`.
+
+Running with `Gunicorn <http://gunicorn.org>_` and `meinheld <http://meinheld.org>`_. ::
+
+  $ supervisorctl -c data/supervisord.conf manage:app
+
+
+Scaffolds
+---------
+
+Views
+~~~~~
+
+You can scaffold views.
+
+For example ::
+
+  $ python manage.py views -n frontend/foo
+
+create following files to {{project}}/views/.
+
+- {{project}}/views/frontend/foo.py
+- {{project}}/tests/functional/frontend/test_foo.py
+
+
+If you want to create RESTful views.
+
+For example::
+
+  $ python manage.py rest -n api/bar
+
+- {{project}}/views/api/bar.py
+- {{project}}/tests/functiona/api/test_bar.py
+
+RESTful view includs following endpoints.
+
+=========== =====================
+function    endpoint
+=========== =====================
+index()     GET /api/bar
+show(id)    GET /api/bar/<id>/
+create()    POST /api/bar/
+update(id)  PUT /api/bar/<id>/
+delete(id)  DELETE /api/bar/<id>/
+=========== =====================
+
+manage.py could show url mapping by following command. ::
+
+  $ python manage.py show_urls
+
+Blueprints
+~~~~~~~~~~
+
+This application is using Flask's blueprints for modular structure.
+
+If you create new view, you should add routing to Flask object.
+
+For example, When you create views/api/books.py, you shoud add blueprints object to {{project}}/views/__init__.py ::
+
+  from {{project}}.views.frontend.index import app
+  from {{project}}.views.api.books import app as books
+
+  views = (app, books)
+
+see more detail in `Flask documents<http://flask.pocoo.org/docs/blueprints/>`_.
+
+
+Models
+~~~~~~
+
+You can scaffold entities.
+
+For example ::
+
+  $ python manage.py entities -n author
+
+create following files to {{project}}/models/entities.
+
+- {{project}}/models/entities/authors.py
+- {{project}}/tests/unit/models/entities/test_author.py
+
+.. note::
+  Entity is SQLALchemy or kind of a DBA layer.
+
+
+You can scaffold models.
+
+For example ::
+
+  $ python manage.py models -n author
+
+create following files to {{project}}/models.
+
+- {{project}}/models/authors.py
+- {{project}}/tests/unit/models/test_author.py
+

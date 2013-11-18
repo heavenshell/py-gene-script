@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.helper
+    {{separator}}
+
+    Helper decorators ..
+
+       - Paramterized test
+
+       .. code:
+
+         @paramterized(param=10, expected=None)
+         @paramterized(param=50, expected=None)
+         def test_paramterize1d(self, params):
+             pass
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from functools import wraps
+
+
+def paramterized(**kwargs):
+    def _paramterized_test(func):
+        @wraps(func)
+        def __paramterized_test(*args):
+            func(args[0], kwargs)
+            return func
+        return __paramterized_test
+    return _paramterized_test

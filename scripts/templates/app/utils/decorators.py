@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.utils.decorators
+    {{separator}}
+
+    Decorators.
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from functools import wraps
+from flask import request, current_app, render_template
+
+
+def jsonp(func):
+    """ Wraps JSONified output for JSONP requests. """
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            data = str(func(*args, **kwargs).data)
+            content = str(callback) + '(' + data + ')'
+            mimetype = 'application/javascript'
+            return current_app.response_class(content, mimetype=mimetype)
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
+
+
+def render(template=None):
+    """
+    Render template.
+
+    :param template:
+    """
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            template_name = template
+            if template_name is None:
+                template_name = request.endpoint.replace('.', '/') + '.html'
+            ctx = f(*args, **kwargs)
+            if ctx is None:
+                ctx = {}
+            elif not isinstance(ctx, dict):
+                return ctx
+            return render_template(template_name, **ctx)
+        return decorated_function
+    return decorator

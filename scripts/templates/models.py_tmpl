@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.models.{{name}}
+    {{separator}}
+
+    Domain logic for {{name}}.
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+
+class {{klass}}(object):
+    def __init__(self):
+        pass

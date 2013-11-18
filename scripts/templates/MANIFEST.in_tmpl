@@ -1,0 +1,10 @@
+include LICENSE.txt README.rst
+recursive-include docs *
+recursive-exclude docs *.pyc
+recursive-exclude docs *.pyo
+recursive-exclude {{project}}/tests *.pyc
+recursive-exclude {{project}}/tests *.pyo
+recursive-exclude examples *.pyc
+recursive-exclude examples *.pyo
+prune docs/_build
+prune docs/_themes/.git

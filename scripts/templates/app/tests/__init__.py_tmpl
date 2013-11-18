@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests
+    {{separator}}
+
+    Base class for tests.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import os
+from unittest import TestCase as BaseTestCase
+from {{project}}.configs.settings import TestSettings
+from {{project}}.app import create_app
+from {{project}}.models.meta import Session
+
+class TestCase(BaseTestCase):
+    def create_app(self):
+        """ Create application. """
+        config = TestSettings()
+        app = create_app(config=config)
+        self.config = config
+        self.app = app
+        self.client = app.test_client()
+
+        return app
+
+    def execute_sql(self, filename):
+        """
+        Execute raw sql file.
+
+        :param filename: Path to sql file
+        """
+        sql_file = os.path.join(self.app.config.get('DATA_DIR'),
+                                'sql', filename)
+
+        fp = open(sql_file, 'r')
+        data = fp.read()
+        fp.close()
+
+        connection = Session.connection().connect()
+        try:
+            trans = connection.begin()
+            connection.execute(data)
+            trans.commit()
+        except:
+            trans.rollback();
+            raise
+        finally:
+            connection.close()
+            Session.remove()

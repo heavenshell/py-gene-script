@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}
+    {{separator}}
+
+    Add descripton here
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+__version__ = '0.0.1'

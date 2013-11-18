@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=0.5,user-scalable=yes,initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/greenmind/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/greenmind/responsive.css">
+    <link rel="stylesheet" href="/static/css/greenmind/content/font/elusive-icons/css/elusive-webfont.min.css">
+    <link rel="stylesheet" href="/static/css/greenmind/style.css">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/libs/html5shiv.js"></script>
+    <![endif]-->
+    <script data-main="/static/js/main" src="/static/js/libs/require-2.1.6-min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-list"></i></button>
+          <a href="/" class="brand"><i class="icon-leaf"></i>GreenMind</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav nav-pills pull-right">
+              <li>
+                <a href="#" title="Sign in">
+                  <i class="icon-white icon-off"></i>Sign in
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="Settings" data-toggle="dropdown">
+                  <i class="icon-cog icon-white"></i>Settings
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Setting item A</a></li>
+                  <li><a href="#">Setting item B</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="Settings" data-toggle="dropdown">
+                  <i class="icon-white icon-user"></i>User name
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Other item</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header class="jumbotron">
+    </header>
+    <div class="page-container">
+      <section class="page-content">
+        {% block body %}{% endblock %}
+      </section>
+    </div>
+
+    <footer id="footer" class="footer">
+      <ul class="nav nav-pills">
+        <li><a href="http://dev.classmethod.jp/author/yamada-naoki/" title="山田直樹 | Developers.IO"><i class="icon-pencil"></i> Blog</a></li>
+        <li><a href="https://www.facebook.com/wakamsha" title="山田直樹 | facebook"><i class="icon-facebook"></i> facebook</a></li>
+        <li><a href="https://github.com/wakamsha" title="wakamsha"><i class="icon-github"></i> Github</a></li>
+      </ul>
+      <p>Made by <strong>WAKAMSHA</strong>. Contact him <a href="mailto:wakamsha@gmail.com">wakamsha@gmail.com</a>.</p>
+      <p>Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.</p>
+      <p>Based on <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>. Hosted on <a href="http://pages.github.com/">GitHub</a>. Icons from <a href="http://aristeides.com/elusive-iconfont/">Elusive Icons</a>. Web fonts from <a href="http://www.google.com/webfonts">Google</a>.
+      <p></p>
+    </footer>
+
+  </body>
+</html>

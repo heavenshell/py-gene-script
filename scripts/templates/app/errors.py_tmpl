@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.errors
+    {{separator}}
+
+    Errors.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+

@@ -1,0 +1,71 @@
+# -*- coding: utf-8 -*-
+"""
+    setup
+    ~~~~~
+
+    setup.py
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import os
+from setuptools import setup, find_packages
+from {{project}} import __version__
+
+app_name = '{{project}}'
+
+rst = os.path.join(os.path.dirname(__file__), 'README.rst')
+description = ''
+with open(rst, 'r') as f:
+  description = f.read()
+
+setup(
+    name=app_name,
+    version=__version__,
+    author='{{author}}',
+    author_email='<enter your email here>',
+    url='<enter your url here>',
+    description='',
+    long_description=description,
+    license='BSD',
+    platforms='any',
+    packages=find_packages(app_name),
+    package_dir={'': app_name},
+    install_requires=[
+        'Flask',
+        'Flask-Script',
+        'Flask-Cache',
+        'Flask-Principal',
+        'Flask-WTF',
+        'Flask-Mail',
+        'Flask-OpenID',
+        'Flask-OAuth',
+        'Flask-Babel',
+        'Flask-Assets',
+        'Flask-Uploads',
+        'Fabric',
+        'Paver',
+        'sqlalchemy',
+        'nose',
+    ],
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+    ],
+    tests_require=['Nose'],
+    test_suite='nose.collector',
+    message_extractors = {
+        app_name: [
+            ('**.py', 'python', None),
+            ('templates/**.html', 'jinja2', None),
+            ('static/**', 'ignore', None)
+        ]
+    }
+)

@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.views.frontend.index
+    {{separator}}
+
+    Index views.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from flask import Blueprint, render_template, current_app
+
+app = Blueprint('index', __name__)
+
+
+@app.route('/', strict_slashes=False)
+def index():
+    """ Dispatch to root. """
+    logger = current_app.logger
+
+    return render_template('frontend/index/index.html')

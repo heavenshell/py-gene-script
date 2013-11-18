@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.configs.environment
+    {{separator}}
+
+    Config container.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+class Config(object):
+    @classmethod
+    def set(cls, config):
+        """
+        Set config to container.
+ 
+        :param config: Config obhect.
+        """
+        cls.config = config
+        return cls
+
+    @classmethod
+    def get(cls, key=None):
+        """
+        Get config from container.
+
+        :param key: Config key.
+        """
+        if key is None:
+            return cls.config
+
+        return cls.config.get(key)

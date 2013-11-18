@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.views
+    {{separator}}
+
+    Export views.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from {{project}}.views.frontend.index import app
+
+views = (app,)

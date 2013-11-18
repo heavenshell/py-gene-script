@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.configs.settings
+    {{separator}}
+
+    Configuration for application.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import logging
+
+
+class Settings(object):
+    #: Debug mode
+    DEBUG = True
+
+    #: Secret key.
+    SECRET_KEY = 'secret'
+
+    #: SQLAlchemy settings.
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}?charset=utf8&use_unicode=0'
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_POOL_RECYCLE = 3600
+
+    #: Logger.
+    LOG_LEVEL = logging.INFO
+    DEBUG_LOG = 'logs/debug.log'
+    ERROR_LOG = 'logs/error.log'
+
+    #: Cache settings.
+    CACHE_TYPE = 'simple'
+    #: second. 
+    CACHE_DEFAULT_TIMEOUT = 300
+
+    #: Lang
+    LANGS = ['ja', 'ja_JP', 'en']
+
+    DATA_DIR = '{root}/data/'
+
+    STATIC_PATH = 'static/'
+
+    MIDDLEWARES = ('{{project}}.utils.method_rewrite.MethodRewrite',)
+    PLUGINS_PATH = 'plugins/'
+
+
+class TestSettings(Settings):
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}_test?charset=utf8&use_unicode=0'
+    SQLALCHEMY_ECHO = True

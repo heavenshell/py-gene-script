@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.views.frontend.test_index
+    {{separator}}
+
+    Tests for {{project}}.views.frontend.index
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from {{project}}.tests import TestCase
+
+class TestIndex(TestCase):
+    def setUp(self):
+        self.create_app()
+
+    def test_root(self):
+        """ GET / should return response code 200.  """
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)

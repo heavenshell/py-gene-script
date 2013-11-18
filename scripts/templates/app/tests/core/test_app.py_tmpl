@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.core.test_app
+    {{separator}}
+
+    App tests.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import os
+import logging
+from unittest import TestCase
+from {{project}}.configs.settings import TestSettings
+from {{project}}.app import create_app
+from {{project}}.models.meta import get_engine
+
+
+class TestDBSettings(TestSettings):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///master.db'
+    SQLALCHEMY_ECHO = False
+    DEBUG_LOG = '{{project}}/tests/core/var/logs/debug.log'
+    ERROR_LOG = '{{project}}/tests/core/var/logs/error.log'
+    LOG_LEVEL = logging.DEBUG
+
+
+class TestMinSettings(object):
+    pass
+
+
+class TestApp(TestCase):
+    def setUp(self):
+        config = TestDBSettings()
+        self.app = create_app(config=config)
+        dirname = os.path.dirname
+        abspath = os.path.abspath(__file__)
+        self.data_dir = dirname(dirname(dirname(dirname(abspath))))
+
+    def test_create_app(self):
+        """ create_app() should return Flask app object. """
+        from flask import Flask
+        self.assertTrue(isinstance(self.app, Flask))
+
+    def test_init_db(self):
+        """ create_app() should initialize db engine. """
+        self.assertEqual(str(get_engine().url),
+                         TestDBSettings.SQLALCHEMY_DATABASE_URI)
+
+    def test_settings_data_dir(self):
+        """ %(root)s should replace to root path."""
+        path = self.app.config.get('DATA_DIR')
+        expected = self.data_dir + '/data/'
+        self.assertEqual(expected, path)
+
+    def test_data_dir_does_not_exists_in_settings(self):
+        """ Default DATA_DIR should set when it does not exists in settings. """
+        config = TestMinSettings()
+        app = create_app(config=config)
+        expected = self.data_dir + '/data/'
+        self.assertEqual(app.config['DATA_DIR'], expected)
+
+    def test_debug_log_does_not_exists_in_settings(self):
+        """ Default DEBUG_LOG should set when it does not exists in settings. """
+        config = TestMinSettings()
+        app = create_app(config=config)
+        self.assertEqual(app.config['DEBUG_LOG'], 'logs/debug.log')
+
+    def test_error_log_does_not_exists_in_settings(self):
+        """ Default ERROR_LOG should set when it does not exists in settings. """
+        config = TestMinSettings()
+        app = create_app(config=config)
+        self.assertEqual(app.config['ERROR_LOG'], 'logs/error.log')
+
+    def test_default_logger_level_should_be_info(self):
+        """ Default logging level should be INFO. """
+        config = TestMinSettings()
+        app = create_app(config=config)
+        self.assertEqual(app.logger.level, logging.INFO)
+
+    def test_logger_level_should_be_set(self):
+        """ Logging level should be set. """
+        config = TestDBSettings()
+        app = create_app(config=config)
+        self.assertEqual(app.logger.level, config.LOG_LEVEL)

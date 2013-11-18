@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.models.entities.{{name}}
+    {{separator}}
+
+    Database entity of {{name}}
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from sqlalchemy import Column, Integer
+from {{project}}.models.meta import Base
+
+
+class {{klass}}(Base):
+    id = Column(Integer, primary_key=True)
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return "<{{klass}}({0})>".format(self.id)

@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.{{module}}.{{name}}
+    {{separator}}
+
+    Tests for {{module}}.{{name}}
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from unittest import TestCase
+
+
+class Test{{klass}}(TestCase):
+    def test_{{klass}}(self):
+        """ {{name}} should fail test. """
+        self.fail()
