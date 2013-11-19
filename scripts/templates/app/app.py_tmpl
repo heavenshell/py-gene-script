@@ -16,6 +16,7 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
 from flaskext.kvsession import KVSessionExtension
+from flaskext.uploads import UploadSet, configure_uploads
 from simplekv.memory import DictStore
 from plugpy import load_plugins
 from {{project}}.configs.settings import Settings
