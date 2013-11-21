@@ -9,7 +9,9 @@
     :license: BSD, see LICENSE for more details.
 """
 from flask.ext.cache import Cache
+from flask.ext.wtf import CsrfProtect
 
-__all__ = ['cache']
+__all__ = ['cache', 'csrf']
 
 cache = Cache()
+csrf = CsrfProtect()

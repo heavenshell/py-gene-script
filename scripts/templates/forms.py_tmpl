@@ -9,7 +9,8 @@
     :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
-from flask.ext.wtf import Form, TextField, validators
+from wtforms import TextField, validators
+from flask.ext.wtf import Form
 from flask.ext.babel import gettext as _
 
 

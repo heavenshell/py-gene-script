@@ -20,7 +20,7 @@ from flaskext.uploads import UploadSet, configure_uploads
 from simplekv.memory import DictStore
 from plugpy import load_plugins
 from {{project}}.configs.settings import Settings
-from {{project}}.extensions import cache
+from {{project}}.extensions import cache, csrf
 from {{project}}.models.meta import init_engine, Session
 from {{project}}.views import views
 
@@ -174,6 +174,9 @@ def configure_extensions(app):
     #: Cache
     if 'CACHE_TYPE' in app.config:
         cache.init_app(app)
+
+    #: CSRF protection
+    csrf.init_app(app)
 
     #: Upload
     if 'UPLOADED_FILES_DEST' in app.config:
