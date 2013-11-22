@@ -220,7 +220,8 @@ def when_ready(server):
             while True:
                 for module in sys.modules.values():
                     path = getattr(module, "__file__", None)
-                    if not path: continue
+                    if not path:
+                        continue
                     if path.endswith(".pyc") or path.endswith(".pyo"):
                         path = path[:-1]
                     try:

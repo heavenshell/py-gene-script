@@ -162,7 +162,7 @@ class TestsGenrator(TestCase):
             self.app.create_rest('testproject', 'frontend/sample')
 
         expected = join(self.var_path, 'testproject',
-                                'views', 'frontend')
+                        'views', 'frontend')
         self.assertTrue(exists(join(expected, 'sample.py')))
         self.assertTrue(exists(join(expected, '__init__.py')))
 

@@ -17,7 +17,7 @@ app_name = '{{project}}'
 rst = os.path.join(os.path.dirname(__file__), 'README.rst')
 description = ''
 with open(rst, 'r') as f:
-  description = f.read()
+    description = f.read()
 
 setup(
     name=app_name,
@@ -61,7 +61,7 @@ setup(
     ],
     tests_require=['Nose'],
     test_suite='nose.collector',
-    message_extractors = {
+    message_extractors={
         app_name: [
             ('**.py', 'python', None),
             ('templates/**.html', 'jinja2', None),
