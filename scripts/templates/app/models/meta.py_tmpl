@@ -113,15 +113,30 @@ def init_engine(config):
 
     :param config: Flask.app.config object
     """
-    configs = config.get('SQLALCHEMY_DATABASE_URI')
-    echo = config.get('SQLALCHEMY_ECHO')
-    pool = config.get('SQLALCHEMY_POOL_RECYCLE')
+    binds = config.get('SQLALCHEMY_BINDS', None)
 
-    if isinstance(configs, dict):
-        for k, v in configs.iteritems():
-            engine = create(v, echo=echo, pool_recycle=pool)
+    configs = {
+      'echo': config.get('SQLALCHEMY_ECHO', False),
+      'pool': config.get('SQLALCHEMY_POOL_RECYCLE', 7200)
+    }
+
+    pool_size = config.get('SQLALCHEMY_POOL_SIZE', None)
+    if pool_size is not None:
+        configs['pool_size'] = pool_size
+
+    pool_timeout = config.get('SQLALCHEMY_POOL_TIMEOUT', None)
+    if pool_timeout is not None:
+        configs['pool_timeout'] = pool_timeout
+
+    max_overflow = config.get('SQLALCHEMY_MAX_OVERFLOW', None)
+    if max_overflow is not None:
+        configs['max_overflow'] = max_overflow
+
+    engine = create(config.get('SQLALCHEMY_DATABASE_URI'), **configs)
+
+    add_engine(engine)
+
+    if binds is not None:
+        for k, v in binds.iteritems():
+            engine = create(v, **configs)
             add_engine(engine, k)
-    else:
-        engine = create(config.get('SQLALCHEMY_DATABASE_URI'), echo=echo,
-                        pool_recycle=pool)
-        add_engine(engine)

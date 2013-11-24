@@ -17,9 +17,9 @@ from {{project}}.models.meta import session, Base, get_engine, create, reset
 
 
 class TestMultiSettings(Settings):
-    SQLALCHEMY_DATABASE_URI = {
-        'default': 'sqlite:///master.db',
-        'slave': 'sqlite:///slave.db',
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///master.db'
+    SQLALCHEMY_DATABASE_BINDS = {
+        'slave': 'sqlite:///slave.db'
     }
     SQLALCHEMY_ECHO = False
 
