@@ -20,6 +20,13 @@ app = create_app()
 manager = Manager(app)
 
 
+def create_generator():
+    from scripts.manage import Generator
+    gen = Generator(author=__author__)
+
+    return gen
+
+
 @manager.command
 def create_all():
     """ Create all table. """
@@ -73,8 +80,7 @@ def view(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_view('{{project}}', name)
     gen.create_test('{{project}}', 'views/{0}'.format(name))
 
@@ -85,8 +91,7 @@ def rest(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_rest('{{project}}', name)
     gen.create_test('{{project}}', 'views/{0}'.format(name))
 
@@ -97,8 +102,7 @@ def model(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_file('{{project}}', name, 'models')
     gen.create_test('{{project}}', 'models/{0}'.format(name))
 
@@ -121,8 +125,7 @@ def form(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_file('{{project}}', name, 'forms')
     gen.create_test('{{project}}', 'forms/{0}'.format(name))
 
@@ -133,8 +136,7 @@ def test(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_test('{{project}}', name)
 
 
