@@ -117,7 +117,7 @@ def init_engine(config):
 
     configs = {
       'echo': config.get('SQLALCHEMY_ECHO', False),
-      'pool': config.get('SQLALCHEMY_POOL_RECYCLE', 7200)
+      'pool_recycle': config.get('SQLALCHEMY_POOL_RECYCLE', 7200)
     }
 
     pool_size = config.get('SQLALCHEMY_POOL_SIZE', None)
