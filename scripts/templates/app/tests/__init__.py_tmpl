@@ -14,6 +14,7 @@ from {{project}}.configs.settings import TestSettings
 from {{project}}.app import create_app
 from {{project}}.models.meta import Session
 
+
 class TestCase(BaseTestCase):
     def create_app(self):
         """ Create application. """
