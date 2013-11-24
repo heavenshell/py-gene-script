@@ -255,7 +255,6 @@ def configure_errorhandlers(app):
 
         return render_template('errors/403.html', error=error), 403
 
-
     @app.errorhandler(404)
     def notfound(error):
         if request.is_xhr:

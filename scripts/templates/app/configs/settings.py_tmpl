@@ -30,7 +30,7 @@ class Settings(object):
 
     #: Cache settings.
     CACHE_TYPE = 'simple'
-    #: second. 
+    #: Cache timeout second.
     CACHE_DEFAULT_TIMEOUT = 300
 
     #: Lang

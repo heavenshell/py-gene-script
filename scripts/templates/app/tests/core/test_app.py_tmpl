@@ -53,20 +53,20 @@ class TestApp(TestCase):
         self.assertEqual(expected, path)
 
     def test_data_dir_does_not_exists_in_settings(self):
-        """ Default DATA_DIR should set when it does not exists in settings. """
+        """ Default DATA_DIR should be set if not exists in settings. """
         config = TestMinSettings()
         app = create_app(config=config)
         expected = self.data_dir + '/data/'
         self.assertEqual(app.config['DATA_DIR'], expected)
 
     def test_debug_log_does_not_exists_in_settings(self):
-        """ Default DEBUG_LOG should set when it does not exists in settings. """
+        """ Default DEBUG_LOG should be set if not exists in settings. """
         config = TestMinSettings()
         app = create_app(config=config)
         self.assertEqual(app.config['DEBUG_LOG'], 'logs/debug.log')
 
     def test_error_log_does_not_exists_in_settings(self):
-        """ Default ERROR_LOG should set when it does not exists in settings. """
+        """ Default ERROR_LOG should set if not exists in settings. """
         config = TestMinSettings()
         app = create_app(config=config)
         self.assertEqual(app.config['ERROR_LOG'], 'logs/error.log')
