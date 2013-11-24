@@ -17,5 +17,6 @@ app = Blueprint('index', __name__)
 def index():
     """ Dispatch to root. """
     logger = current_app.logger
+    logger.debug('GET /')
 
     return render_template('frontend/index/index.html')
