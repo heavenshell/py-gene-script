@@ -12,7 +12,7 @@
 """
 from flask.ext.script import Manager
 from {{project}}.app import create_app
-from {{project}}.models.meta import Session, Base
+from {{project}}.models.meta import session, Base
 
 __author__ = '{{author}}'
 
@@ -23,14 +23,14 @@ manager = Manager(app)
 @manager.command
 def create_all():
     """ Create all table. """
-    Base.metadata.create_all(bind=Session.bind)
+    Base.metadata.create_all(bind=session.bind)
     print('\033[31m{0}\033[0m'.format('Create database success.'))
 
 
 @manager.command
 def drop_all():
     """ Drop all table. """
-    Base.metadata.drop_all(bind=Session.bind)
+    Base.metadata.drop_all(bind=session.bind)
     print('\033[31m{0}\033[0m'.format('Drop database success.'))
 
 

@@ -12,7 +12,7 @@ import os
 from unittest import TestCase as BaseTestCase
 from {{project}}.configs.settings import TestSettings
 from {{project}}.app import create_app
-from {{project}}.models.meta import Session
+from {{project}}.models.meta import session
 
 
 class TestCase(BaseTestCase):
@@ -39,7 +39,7 @@ class TestCase(BaseTestCase):
         data = fp.read()
         fp.close()
 
-        connection = Session.connection().connect()
+        connection = session.connection().connect()
         try:
             trans = connection.begin()
             connection.execute(data)
@@ -49,4 +49,4 @@ class TestCase(BaseTestCase):
             raise
         finally:
             connection.close()
-            Session.remove()
+            session.remove()

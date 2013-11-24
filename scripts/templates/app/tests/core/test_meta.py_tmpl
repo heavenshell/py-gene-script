@@ -13,7 +13,7 @@ from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
 from {{project}}.app import create_app
-from {{project}}.models.meta import Session, Base, get_engine, create, reset
+from {{project}}.models.meta import session, Base, get_engine, create, reset
 
 
 class TestMultiSettings(Settings):
@@ -36,7 +36,7 @@ class EngineTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        Session.remove()
+        session.remove()
 
     def test_init_engine(self):
         """ DB engine should create when create_app() loaded. """
@@ -57,7 +57,7 @@ class BaseTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        Session.remove()
+        session.remove()
         reset()
         if os.path.exists('./master.db'):
             os.remove('./master.db')
@@ -71,10 +71,10 @@ class BaseTest(TestCase):
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
 
-        Session.add_all([foo, bar])
-        Session.commit()
+        session.add_all([foo, bar])
+        session.commit()
 
-        row = Session.query(Person).filter(Person.id==1).one()
+        row = session.query(Person).filter(Person.id==1).one()
         self.assertEqual(row.first_name, foo.first_name)
 
     def test_model_find(self):
@@ -83,10 +83,10 @@ class BaseTest(TestCase):
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
 
-        Session.add_all([foo, bar])
-        Session.commit()
+        session.add_all([foo, bar])
+        session.commit()
 
-        rows = Session.query(Person).all()
+        rows = session.query(Person).all()
         self.assertEqual(rows[0].first_name, foo.first_name)
         self.assertEqual(rows[1].first_name, bar.first_name)
 
@@ -99,9 +99,9 @@ class BaseTest(TestCase):
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
 
-        Session.configure(bind=engine)
-        Session.add_all([foo, bar])
-        Session.commit()
+        session.configure(bind=engine)
+        session.add_all([foo, bar])
+        session.commit()
 
-        row = Session.query(Person).filter(Person.id==1).one()
+        row = session.query(Person).filter(Person.id==1).one()
         self.assertEqual(row.first_name, foo.first_name)
