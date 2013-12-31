@@ -160,9 +160,9 @@ loglevel = 'info'
 root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 log_path = os.path.join(root_path, 'logs')
 
-#accesslog = '-'
-accesslog = '{0}/access_log'.format(log_path)
-access_log_format = '"%(h)s %(l)s %(u)s [%(t)s] "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" "%(p)s" %(T)s %(D)s'
+accesslog = '-'
+#accesslog = '{0}/access_log'.format(log_path)
+#access_log_format = '"%(h)s %(l)s %(u)s [%(t)s] "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" "%(p)s" %(T)s %(D)s'
 
 #
 # Process naming
