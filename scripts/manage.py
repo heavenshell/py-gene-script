@@ -19,6 +19,7 @@ import re
 import shutil
 from datetime import datetime
 from argparse import ArgumentParser
+from _compat import iteritems
 
 __version__ = '0.1'
 
@@ -134,8 +135,11 @@ class Generator(object):
         #: Template variable {{foo}}
         with open(file_path, 'r') as f:
             tmpl = f.read()
-            for k, v in kwargs.iteritems():
-                tmpl = tmpl.replace('{{%s}}' % k, v)
+            for k, v in iteritems(kwargs):
+                #: Equivalent to `{{%s}} % k`.
+                #: Should use String.template?
+                var = '{{{}}}'.format(k)
+                tmpl = tmpl.replace('{{{0}}}'.format(var), v)
 
         if tmpl is None:
             return
