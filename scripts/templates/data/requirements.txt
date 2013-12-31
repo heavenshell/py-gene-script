@@ -4,13 +4,8 @@ Flask-Principal
 Flask-WTF
 Flask-Mail
 Flask-Script
-Flask-OpenID
-Flask-Assets
 Flask-Babel
-Flask-Uploads
-Flask-OAuth
 Flask-kvsession
-Paver
 Fabric
 SQLAlchemy
 nose
@@ -18,3 +13,4 @@ simplejson
 PyMySQL
 gunicorn
 gevent
+tox
