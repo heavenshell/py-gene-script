@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    Flask generator
-    ~~~~~~~~~~~~~~~
+    gene.script.manage
+    ~~~~~~~~~~~~~~~~~~
 
     Generat Flask project/file.
 
