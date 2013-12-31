@@ -10,7 +10,7 @@
     But I want to generate Sphinx header.
     That's why I reinventing the wheel.
 
-    :copyright: (c) 2012 Shinya Ohyanagi, All rights reserved.
+    :copyright: (c) 2014 Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import os
