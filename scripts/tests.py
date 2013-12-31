@@ -14,9 +14,14 @@ import sys
 import shutil
 from os.path import dirname, join, exists
 from datetime import datetime
-from cStringIO import StringIO
 from unittest import TestCase
 from manage import Generator, GeneratorError
+from _compat import to_unicode
+
+if sys.version_info[0] == 2:
+    from cStringIO import StringIO
+else:
+    from io import StringIO
 
 
 class HookStdOut(object):
@@ -146,6 +151,7 @@ class TestsGenrator(TestCase):
         self.assertTrue(exists(join(self.var_path, 'setup.py')))
         self.assertTrue(exists(join(self.var_path, 'testproject')))
         self.assertTrue(exists(join(self.var_path, 'var')))
+        self.assertTrue(exists(join(self.var_path, 'tox.ini')))
 
     def test_should_create_view(self):
         """ Should create view file. """
@@ -195,7 +201,12 @@ class TestsGenrator(TestCase):
 
         with open(view_path, 'rb') as f:
             lines = f.readlines()
-            self.assertEqual(lines[2].lstrip().rstrip(),
+            self.assertEqual(to_unicode(lines[2].lstrip().rstrip()),
                              'testproject.views.frontend.index')
-            self.assertEqual(lines[3].lstrip().rstrip(),
+            self.assertEqual(to_unicode(lines[3].lstrip().rstrip()),
                              '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+
+if __name__ == '__main__':
+    import unittest
+    unittest.main()
