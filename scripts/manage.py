@@ -244,7 +244,7 @@ class Generator(object):
 
         default_files = [
             'manage.py_tmpl', 'LICENSE.txt_tmpl', 'MANIFEST.in_tmpl',
-            'README.rst_tmpl', 'setup.py_tmpl'
+            'README.rst_tmpl', 'setup.py_tmpl', 'tox.ini_tmpl'
         ]
         for fname in default_files:
             src = os.path.join(self.tmpl_path, fname)
