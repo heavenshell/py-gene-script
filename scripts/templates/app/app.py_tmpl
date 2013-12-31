@@ -16,9 +16,7 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
 from flaskext.kvsession import KVSessionExtension
-from flaskext.uploads import UploadSet, configure_uploads
 from simplekv.memory import DictStore
-from plugpy import load_plugins
 from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
 from {{project}}.models.meta import init_engine, session
@@ -55,8 +53,6 @@ def create_app(config=None, app_name=None, modules=None):
     if 'MIDDLEWARES' in app.config:
         configure_middlewares(app)
 
-    if 'PLUGINS_PATH' in app.config:
-        configure_plugpy(app)
 
     @app.before_request
     def before_request():
@@ -185,10 +181,7 @@ def configure_extensions(app):
         if not uploads_dest.startswith('/'):
             uploads_dest = '{0}/var/uploads'.format(root_path)
 
-        media = UploadSet('media', default_dest=lambda app: uploads_dest)
-        configure_uploads(app, media)
-        app.uploads = media
-
+        app.config.update({'UPLOADED_FILES_DEST': uploads_dest})
 
 def configure_i18n(app):
     """
@@ -220,19 +213,6 @@ def configure_middlewares(app):
         name = target[-1]
         klass = getattr(__import__(module, fromlist=[name]), name)
         app.wsgi_app = klass(app)
-
-
-def configure_plugpy(app):
-    """
-    Configure plugins.
-
-    Plugin structure use Plugpy.
-
-    :param app: Flask object.
-    """
-    path = os.path.join(app.root_path, app.config['PLUGINS_PATH']).rstrip('/')
-    app.config['PLUGINS_PATH'] = path
-    load_plugins(dict(), debug=False, plugin_path=path)
 
 
 def configure_errorhandlers(app):
