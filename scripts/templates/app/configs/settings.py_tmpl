@@ -41,7 +41,6 @@ class Settings(object):
     STATIC_PATH = 'static/'
 
     MIDDLEWARES = ('{{project}}.utils.method_rewrite.MethodRewrite',)
-    PLUGINS_PATH = 'plugins/'
 
 
 class TestSettings(Settings):
