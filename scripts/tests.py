@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    generate.tests
-    ~~~~~~~~~~~~~~
+    gene.script.tests
+    ~~~~~~~~~~~~~~~~~
 
     Tests for Flask project generator.
 
