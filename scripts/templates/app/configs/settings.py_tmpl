@@ -33,7 +33,7 @@ class Settings(object):
     #: Cache timeout second.
     CACHE_DEFAULT_TIMEOUT = 300
 
-    #: Lang
+    #: Lang.
     LANGS = ['ja', 'ja_JP', 'en']
 
     DATA_DIR = '{root}/data/'
