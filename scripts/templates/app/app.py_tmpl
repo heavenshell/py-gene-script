@@ -13,10 +13,10 @@ import re
 import logging
 import simplejson as json
 from logging.handlers import RotatingFileHandler
+from redis import Redis
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
-from flaskext.kvsession import KVSessionExtension
-from simplekv.memory import DictStore
+from {{project}}.utils.session import RedisSessionInterface
 from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
 from {{project}}.models.meta import init_engine, session
@@ -42,6 +42,7 @@ def create_app(config=None, app_name=None, modules=None):
     app = Flask(app_name)
 
     configure_settings(app, config)
+    configure_session(app, config)
     configure_logging(app)
     configure_extensions(app)
     configure_modules(app, modules)
@@ -93,6 +94,32 @@ def configure_settings(app, config):
 
     data_dir = app.config['DATA_DIR'].format(root=root_path)
     app.config.update({'DATA_DIR': data_dir})
+
+
+def configure_session(app, config):
+    """
+    Configure Flask session.
+
+    :param app: Flask object.
+    :param config: Configuration.
+    """
+    #: If Flask-KVSession support Python3, use Flask-KVSESSION instead.
+    config = app.config.get('SESSION_SETTINGS')
+    if config is None:
+        return
+
+    if config['type'] == 'redis':
+        if 'url' not in config:
+            url = '127.0.0.1:6379'
+        else:
+            url = config['url']
+        host, port = url.split(':')
+        if 'db' not in config:
+            db = 0
+        else:
+            db = config['db']
+        redis = Redis(host=host, port=int(port), db=db)
+        app.session_interface = RedisSessionInterface(redis=redis)
 
 
 def configure_logging(app):
@@ -160,9 +187,6 @@ def configure_extensions(app):
 
     :param app: Flask object.
     """
-    #: Session
-    store = DictStore()
-    KVSessionExtension(store, app)
     #: SQAlchemy
     if 'SQLALCHEMY_DATABASE_URI' in app.config:
         init_engine(app.config)
