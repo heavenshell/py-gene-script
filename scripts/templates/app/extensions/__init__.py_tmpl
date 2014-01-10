@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.extensions
+    {{separator}}
+
+    Extensions.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from flask.ext.cache import Cache
+from flask.ext.wtf import CsrfProtect
+
+__all__ = ['cache', 'csrf']
+
+cache = Cache()
+csrf = CsrfProtect()
