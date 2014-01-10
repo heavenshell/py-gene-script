@@ -9,6 +9,7 @@ Flask-kvsession
 Fabric
 SQLAlchemy
 nose
+redis
 simplejson
 PyMySQL
 gunicorn
