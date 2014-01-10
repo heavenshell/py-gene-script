@@ -223,6 +223,7 @@ class Generator(object):
                         'separator': separator,
                         'project_root': project_root,
                         'project': project_name,
+                        'project_upper': project_name.upper(),
                         'year': self.year,
                         'author': self.author
                     }
@@ -262,6 +263,7 @@ class Generator(object):
                 'package': package,
                 'separator': separator,
                 'project': project_name,
+                'project_upper': project_name.upper(),
                 'year': self.year,
                 'author': self.author
             }

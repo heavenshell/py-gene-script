@@ -10,13 +10,20 @@
     :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
+import os
 from flask.ext.script import Manager
 from {{project}}.app import create_app
 from {{project}}.models.meta import session, Base
 
 __author__ = '{{author}}'
 
-app = create_app()
+#: Use specific config.
+#: $ export {{project_upper}}_APP_CONFIG={{project}}.configs.settings.Settings
+config = None
+if '{{project_upper}}_APP_CONFIG' in os.environ:
+    config = os.environ['{{project_upper}}_APP_CONFIG']
+
+app = create_app(config=config)
 manager = Manager(app)
 
 
