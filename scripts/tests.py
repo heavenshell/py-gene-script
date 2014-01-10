@@ -50,6 +50,11 @@ class TestsGenrator(TestCase):
         cls.var_path = var_path
         cls.current_path = current_path
 
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.exists(cls.var_path):
+            shutil.rmtree(cls.var_path)
+
     def setUp(self):
         self.app = Generator(self.var_path)
         if os.path.exists(self.var_path):
