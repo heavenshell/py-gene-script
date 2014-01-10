@@ -207,6 +207,7 @@ def configure_extensions(app):
 
         app.config.update({'UPLOADED_FILES_DEST': uploads_dest})
 
+
 def configure_i18n(app):
     """
     Configure Babel settings.
