@@ -42,6 +42,11 @@ class Settings(object):
 
     MIDDLEWARES = ('{{project}}.utils.method_rewrite.MethodRewrite',)
 
+    #: Session.
+    SESSION_SETTINGS = {
+        'type': 'redis',
+        'prefix': '{{project}}:session:'
+    }
 
 
 class DevelopmentSettings(Settings):
