@@ -13,7 +13,7 @@ import logging
 
 class Settings(object):
     #: Debug mode
-    DEBUG = True
+    DEBUG = False
 
     #: Secret key.
     SECRET_KEY = 'secret'
@@ -41,6 +41,13 @@ class Settings(object):
     STATIC_PATH = 'static/'
 
     MIDDLEWARES = ('{{project}}.utils.method_rewrite.MethodRewrite',)
+
+
+
+class DevelopmentSettings(Settings):
+    #: Debug mode
+    DEBUG = True
+    LOG_LEVEL = logging.DEBUG
 
 
 class TestSettings(Settings):
