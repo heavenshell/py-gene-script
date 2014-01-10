@@ -120,8 +120,7 @@ def entity(name=''):
     if name is '':
         return
 
-    from scripts.manage import Generator
-    gen = Generator(author=__author__)
+    gen = create_generator()
     gen.create_entity('{{project}}', 'entities/{0}'.format(name))
     gen.create_test('{{project}}', 'models/entities/{0}'.format(name))
 
