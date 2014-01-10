@@ -21,7 +21,7 @@ from datetime import datetime
 from argparse import ArgumentParser
 from _compat import iteritems
 
-__version__ = '0.1'
+__version__ = '0.3'
 
 
 def red(msg):
