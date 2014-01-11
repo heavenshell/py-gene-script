@@ -42,7 +42,7 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
     app = Flask(app_name)
 
     configure_settings(app, config)
-    configure_session(app, config)
+    configure_session(app)
     configure_logging(app)
     configure_extensions(app)
     configure_modules(app, modules)
@@ -97,12 +97,11 @@ def configure_settings(app, config):
     app.config.update({'DATA_DIR': data_dir})
 
 
-def configure_session(app, config):
+def configure_session(app):
     """
     Configure Flask session.
 
     :param app: Flask object.
-    :param config: Configuration.
     """
     #: If Flask-KVSession support Python3, use Flask-KVSESSION instead.
     config = app.config.get('SESSION_SETTINGS')
