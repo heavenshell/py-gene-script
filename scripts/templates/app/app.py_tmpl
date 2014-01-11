@@ -25,7 +25,7 @@ from {{project}}.views import views
 __all__ = ['create_app']
 
 
-def create_app(config=None, app_name=None, modules=None):
+def create_app(config=None, app_name=None, modules=None, injector=None):
     """
     Create application.
 
@@ -47,6 +47,7 @@ def create_app(config=None, app_name=None, modules=None):
     configure_extensions(app)
     configure_modules(app, modules)
     configure_errorhandlers(app)
+    configure_injector(app, injector)
 
     if 'LANGS' in app.config:
         configure_i18n(app)
@@ -206,6 +207,15 @@ def configure_extensions(app):
             uploads_dest = '{0}/var/uploads'.format(root_path)
 
         app.config.update({'UPLOADED_FILES_DEST': uploads_dest})
+
+def configure_injector(app, injector=None):
+    """
+    Configure Flask-Injector for DI Container.
+
+    :param app: Flask object.
+    :param injector: Injector module
+    """
+    pass
 
 
 def configure_i18n(app):

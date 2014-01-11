@@ -107,3 +107,62 @@ create following files to {{project}}/models.
 
 - {{project}}/models/books.py
 - {{project}}/tests/unit/models/test_books.py
+
+
+Using Flask-Injector
+--------------------
+
+Using Flask-Injector is good solution to solve model dependencies.
+
+Create `injector.py` to `extensions/binds.py`.
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  from injector import inject, Key, singleton
+  from flask import Flask
+  from flask.ext.injector import request
+
+  from models.user import User as UserProvider
+  from models.admin import Admin as AdminProvider
+
+  User = Key('user')
+  Admin = Key('admin')
+
+  @inject(app=Flask)
+  def configure(binder, app):
+      binder.bind(User, to=UserProvider(app.config), scope=singleton)
+      binder.bind(Admin, to=AdminProvider, scope=request)
+
+
+Add following code to `app.py`.
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  from injector import inject, Key, singleton
+  from flask.ext.injector import init_app, post_init_app
+  from {{project}}.extensions.injector import configure
+
+  def configure_injector(app, binds=None):
+      if binds is None:
+          binds = configure
+
+      injector = init_app(app=app, modules=[binds])
+      post_init_app(app, injector)
+
+Now view can use `Injector`.
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  from injector import inject
+  from flask import Blueprint
+  from {{project}}.extensions.injector import User, Admin
+
+  app = Blueprint('index', __name__)
+
+  @app.route('/<key>', strict_slashes=False, methods=['GET'])
+  @inject(service=User)
+  def user(key, service):
+      print(service) # service is User instance.
