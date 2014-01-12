@@ -40,4 +40,3 @@ def to_unicode(x, charset=sys.getdefaultencoding(), errors='strict',
     if charset is None and allow_none_charset:
         return x
     return x.decode(charset, errors)
-
