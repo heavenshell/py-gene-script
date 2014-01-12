@@ -1,0 +1,120 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.core.test_session
+    {{separator}}
+
+    RedisSessionInterface tests.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+import json
+import pickle
+from redis import Redis
+from flask import Flask, session
+from unittest import TestCase
+from {{project}}.configs.settings import TestSettings as Settings
+from {{project}}.app import create_app
+from {{project}}.utils.session import RedisSessionInterface
+from {{project}}.utils.compat import to_unicode
+
+
+class TestSettings(Settings):
+    SESSION_SETTINGS = {
+        'type': 'redis',
+        'uri': '127.0.0.1:6379',
+        'db': 2
+    }
+
+
+def _create_app(config):
+    app = Flask(__name__)
+    app.config.from_object(config)
+    app.config['TESTING'] = True
+    app.config['SECRET_KEY'] = 'devkey'
+
+    redis = Redis(host='127.0.0.1', port=6379, db=2)
+    app.session_interface = RedisSessionInterface(redis=redis)
+
+
+    @app.route('/')
+    def index():
+        return ''
+
+
+    @app.route('/store-in-session/<key>/<value>/')
+    def store(key, value):
+        session[key] = value
+        return json.dumps({key: value, 'sid': session.sid})
+
+
+    @app.route('/dump-session/')
+    def dump():
+        sess = dict(session)
+        sess['sid'] = session.sid
+
+        return json.dumps(sess)
+
+
+    @app.route('/regenerate-session/')
+    def regenerate():
+
+        session.regenerate()
+
+        sess = dict(session)
+        sess['sid'] = session.sid
+        return json.dumps(sess)
+
+
+    return app
+
+
+class TestSession(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.redis = Redis(host='127.0.0.1', port=6379, db=2)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.redis.flushdb()
+
+    def setUp(self):
+        self.app = _create_app(config=TestSettings)
+        self.client = self.app.test_client()
+
+    def test_session_inteface_should_be_redis(self):
+        """ {{project}}.app.session_interface should be RedisSessionInterface. """
+        app = create_app()
+        self.assertIsInstance(app.session_interface, RedisSessionInterface)
+
+    def test_session_should_save_to_redis(self):
+        """ Session should store to Redis. """
+        self.client.get('/store-in-session/foo/bar/')
+        ret = self.client.get('/dump-session/')
+        data = json.loads(to_unicode(ret.data))
+        stored_data = self.redis.get('session:{0}'.format(data['sid']))
+
+        self.assertEqual(data['foo'], pickle.loads(stored_data)['foo'])
+
+    def test_session_id_should_be_same(self):
+        """ session.id should be same. """
+        ret = self.client.get('/store-in-session/foo/bar/')
+        sid1 = json.loads(to_unicode(ret.data))['sid']
+        with self.client as c:
+            c.set_cookie('localhost', 'session', sid1)
+            ret = c.get('/store-in-session/foo/baz/')
+            sid2 = json.loads(to_unicode(ret.data))['sid']
+
+        self.assertEqual(sid1, sid2)
+
+    def test_session_should_regenarate(self):
+        """ session.regenerate() should regenerate new session id. """
+        ret = self.client.get('/store-in-session/foo/bar/')
+        sid = json.loads(to_unicode(ret.data))['sid']
+        with self.client as c:
+            c.set_cookie('localhost', 'session', sid)
+            c.get('/regenerate-session/')
+            ret = c.get('/dump-session/')
+            regen_sid = json.loads(to_unicode(ret.data))['sid']
+
+        self.assertNotEqual(sid, regen_sid)
