@@ -13,7 +13,7 @@ import logging
 from unittest import TestCase
 from {{project}}.configs.settings import TestSettings
 from {{project}}.app import create_app
-from {{project}}.models.meta import get_engine
+from {{project}}.models.db import get_engine
 
 
 class TestDBSettings(TestSettings):

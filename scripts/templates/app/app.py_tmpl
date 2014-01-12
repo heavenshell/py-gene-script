@@ -19,7 +19,7 @@ from flask.ext.babel import Babel, gettext as _
 from {{project}}.utils.session import RedisSessionInterface
 from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
-from {{project}}.models.meta import init_engine, session
+from {{project}}.models.db import init_engine, session
 from {{project}}.views import views
 
 __all__ = ['create_app']

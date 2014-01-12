@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-    {{project}}.tests.core.test_meta
+    {{project}}.tests.core.test_db
     {{separator}}
 
-    DB meta tests.
+    DB tests.
 
     :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
@@ -13,7 +13,7 @@ from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
 from {{project}}.app import create_app
-from {{project}}.models.meta import session, Base, get_engine, create, reset
+from {{project}}.models.db import session, Base, get_engine, create, reset
 
 
 class TestMultiSettings(Settings):

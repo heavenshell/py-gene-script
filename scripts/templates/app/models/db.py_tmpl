@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    {{project}}.models.meta
+    {{project}}.models.db
     {{separator}}
 
     Create session and declarative_base.

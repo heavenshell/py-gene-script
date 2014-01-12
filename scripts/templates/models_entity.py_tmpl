@@ -10,7 +10,7 @@
     :license: BSD, see LICENSE for more details.
 """
 from sqlalchemy import Column, Integer
-from {{project}}.models.meta import Base
+from {{project}}.models.db import Base
 
 
 class {{klass}}(Base):

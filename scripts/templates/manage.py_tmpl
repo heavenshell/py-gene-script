@@ -13,7 +13,7 @@
 import os
 from flask.ext.script import Manager
 from {{project}}.app import create_app
-from {{project}}.models.meta import session, Base
+from {{project}}.models.db import session, Base
 
 __author__ = '{{author}}'
 

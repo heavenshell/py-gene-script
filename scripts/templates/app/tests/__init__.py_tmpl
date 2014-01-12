@@ -12,7 +12,7 @@ import os
 from unittest import TestCase as BaseTestCase
 from {{project}}.configs.settings import TestSettings
 from {{project}}.app import create_app
-from {{project}}.models.meta import session
+from {{project}}.models.db import session
 
 
 class TestCase(BaseTestCase):
