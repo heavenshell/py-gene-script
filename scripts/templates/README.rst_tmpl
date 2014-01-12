@@ -86,7 +86,7 @@ You can scaffold entities.
 
 For example ::
 
-  $ python manage.py entities -n books
+  $ python manage.py entity -n books
 
 create following files to {{project}}/models/entities.
 
