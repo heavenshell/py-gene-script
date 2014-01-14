@@ -19,7 +19,12 @@ import re
 import shutil
 from datetime import datetime
 from argparse import ArgumentParser
-from _compat import iteritems
+try:
+    from ._compat import iteritems
+except ImportError:
+    #: For Python2.7
+    from _compat import iteritems
+
 
 __version__ = '0.3'
 
