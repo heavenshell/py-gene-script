@@ -408,6 +408,14 @@ class Generator(object):
         """
         self.create_file(project_name, file_name, category='tests')
 
+    def output_error(self, msg):
+        """
+        Output error message.
+
+        :param msg: Error message
+        """
+        output(red(msg))
+
     def run(self):
         """ Run. """
         parser = self.parse_options()
