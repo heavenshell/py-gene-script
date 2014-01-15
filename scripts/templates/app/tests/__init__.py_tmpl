@@ -35,9 +35,9 @@ class TestCase(BaseTestCase):
         sql_file = os.path.join(self.app.config.get('DATA_DIR'),
                                 'sql', filename)
 
-        fp = open(sql_file, 'r')
-        data = fp.read()
-        fp.close()
+        data = ''
+        with open(sql_file, 'r') as f:
+            data = f.read()
 
         connection = session.connection().connect()
         try:
