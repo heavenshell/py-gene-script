@@ -110,8 +110,11 @@ def model(name=''):
         return
 
     gen = create_generator()
-    gen.create_file('{{project}}', name, 'models')
-    gen.create_test('{{project}}', 'models/{0}'.format(name))
+    try:
+        gen.create_file('{{project}}', name, 'models')
+        gen.create_test('{{project}}', 'models/{0}'.format(name))
+    except Exception as e:
+        gen.output_error(e)
 
 
 @manager.command
@@ -121,8 +124,11 @@ def entity(name=''):
         return
 
     gen = create_generator()
-    gen.create_entity('{{project}}', 'entities/{0}'.format(name))
-    gen.create_test('{{project}}', 'models/entities/{0}'.format(name))
+    try:
+        gen.create_entity('{{project}}', 'entities/{0}'.format(name))
+        gen.create_test('{{project}}', 'models/entities/{0}'.format(name))
+    except Exception as e:
+        gen.output_error(e)
 
 
 @manager.command
@@ -132,8 +138,11 @@ def form(name=''):
         return
 
     gen = create_generator()
-    gen.create_file('{{project}}', name, 'forms')
-    gen.create_test('{{project}}', 'forms/{0}'.format(name))
+    try:
+        gen.create_file('{{project}}', name, 'forms')
+        gen.create_test('{{project}}', 'forms/{0}'.format(name))
+    except Exception as e:
+        gen.output_error(e)
 
 
 @manager.command
@@ -143,7 +152,10 @@ def test(name=''):
         return
 
     gen = create_generator()
-    gen.create_test('{{project}}', name)
+    try:
+        gen.create_test('{{project}}', name)
+    except Exception as e:
+        gen.output_error(e)
 
 
 if __name__ == '__main__':
