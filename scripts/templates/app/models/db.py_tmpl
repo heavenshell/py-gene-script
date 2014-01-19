@@ -23,12 +23,17 @@
     :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
+import re
+import warnings
+from werkzeug.urls import url_parse
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
-from {{project}}.utils.compat import iteritems
+from {{project}}.utils.compat import iteritems, PY2
 
 __all__ = ['Base', 'session', 'init_engine', 'get_engine']
+
+r = re.compile(r'[^mysql+pymysql].[?|&]use_unicode=')
 
 
 class AttributeContainer(object):
@@ -105,6 +110,14 @@ def create(uri, **kwargs):
     """
     if 'convert_unicode' not in kwargs:
         kwargs['convert_unicode'] = True
+
+    query = url_parse(uri).query
+    if query == '':
+        warnings.warn('SQLALCHEMY_DATABASE_URI should include `charset=utf8`')
+    else:
+        if not PY2 and r.search(query):
+            #: `use_unicode` depericate in Python3 + PyMySQL.
+            warnings.warn('use_unicode is deprecated.', DeprecationWarning)
 
     return create_engine(uri, **kwargs)
 
