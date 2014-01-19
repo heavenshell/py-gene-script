@@ -28,3 +28,14 @@ def paramterized(**kwargs):
             return func
         return __paramterized_test
     return _paramterized_test
+
+
+def init_db(engine_name='default'):
+    """
+    Initialize database.
+
+    :param engine_name: SQLAlchemy's engine name
+    """
+    engine = get_engine(engine_name)
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
