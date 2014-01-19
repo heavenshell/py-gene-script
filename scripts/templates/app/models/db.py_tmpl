@@ -85,6 +85,7 @@ def get_base():
 def set_base(base):
     bases.default = base
 
+
 #: Clear all.
 reset()
 
@@ -117,8 +118,8 @@ def init_engine(config):
     binds = config.get('SQLALCHEMY_BINDS', None)
 
     configs = {
-      'echo': config.get('SQLALCHEMY_ECHO', False),
-      'pool_recycle': config.get('SQLALCHEMY_POOL_RECYCLE', 7200)
+        'echo': config.get('SQLALCHEMY_ECHO', False),
+        'pool_recycle': config.get('SQLALCHEMY_POOL_RECYCLE', 7200)
     }
 
     pool_size = config.get('SQLALCHEMY_POOL_SIZE', None)

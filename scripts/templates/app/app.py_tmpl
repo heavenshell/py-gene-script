@@ -55,7 +55,6 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
     if 'MIDDLEWARES' in app.config:
         configure_middlewares(app)
 
-
     @app.before_request
     def before_request():
         pass
@@ -206,6 +205,7 @@ def configure_extensions(app):
             uploads_dest = '{0}/var/uploads'.format(root_path)
 
         app.config.update({'UPLOADED_FILES_DEST': uploads_dest})
+
 
 def configure_injector(app, injector=None):
     """

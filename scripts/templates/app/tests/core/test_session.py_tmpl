@@ -36,17 +36,14 @@ def _create_app(config):
     redis = Redis(host='127.0.0.1', port=6379, db=2)
     app.session_interface = RedisSessionInterface(redis=redis)
 
-
     @app.route('/')
     def index():
         return ''
-
 
     @app.route('/store-in-session/<key>/<value>/')
     def store(key, value):
         session[key] = value
         return json.dumps({key: value, 'sid': session.sid})
-
 
     @app.route('/dump-session/')
     def dump():
@@ -54,7 +51,6 @@ def _create_app(config):
         sess['sid'] = session.sid
 
         return json.dumps(sess)
-
 
     @app.route('/regenerate-session/')
     def regenerate():
@@ -64,7 +60,6 @@ def _create_app(config):
         sess = dict(session)
         sess['sid'] = session.sid
         return json.dumps(sess)
-
 
     return app
 
