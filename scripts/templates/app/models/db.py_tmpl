@@ -113,7 +113,8 @@ def create(uri, **kwargs):
 
     query = url_parse(uri).query
     if query == '':
-        warnings.warn('SQLALCHEMY_DATABASE_URI should include `charset=utf8`')
+        if uri.startswith('mysql+pymysql'):
+            warnings.warn('SQLALCHEMY_DATABASE_URI should include `charset=utf8`')
     else:
         if not PY2 and r.search(query):
             #: `use_unicode` depericate in Python3 + PyMySQL.
