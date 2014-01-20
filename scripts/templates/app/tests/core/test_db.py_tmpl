@@ -36,7 +36,7 @@ class EngineTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        session.remove()
+        pass
 
     def test_init_engine(self):
         """ DB engine should create when create_app() loaded. """
@@ -57,8 +57,6 @@ class BaseTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        session.remove()
-        reset()
         if os.path.exists('./master.db'):
             os.remove('./master.db')
 
