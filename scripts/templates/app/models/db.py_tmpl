@@ -86,7 +86,7 @@ def get_engine(name='default'):
     try:
         return getattr(engines, name)
     except AttributeError:
-        raise RuntimeError("No engine '%s' was configured" % name)
+        raise RuntimeError("No engine '{0}' was configured".format(name))
 
 
 def get_base():
