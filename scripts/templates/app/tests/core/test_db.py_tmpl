@@ -13,19 +13,24 @@ from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
 from {{project}}.app import create_app
-from {{project}}.models.db import session, Base, get_engine, create, reset
+from {{project}}.models.db import session, Base, get_engine, create, remove_engine
+
+
+PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'var')
+MASTER = 'sqlite:///{0}/master.db'.format(PATH)
+SLAVE = 'sqlite:///{0}/slave.db'.format(PATH)
 
 
 class TestMultiSettings(Settings):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///master.db'
+    SQLALCHEMY_DATABASE_URI = MASTER
     SQLALCHEMY_BINDS = {
-        'slave': 'sqlite:///slave.db'
+        'slave': SLAVE
     }
     SQLALCHEMY_ECHO = False
 
 
 class Person(Base):
-    __tablename__ = 'people'
+    __tablename__ = 'core_test_people'
     id = Column(Integer, primary_key=True)
     first_name = Column(String(100), nullable=False)
 
@@ -36,19 +41,23 @@ class EngineTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        pass
+        Base.metadata.drop_all()
+        remove_engine()
+        master = '{0}/master.db'.format(PATH)
+        if os.path.exists(master):
+            os.remove(master)
 
     def test_init_engine(self):
         """ DB engine should create when create_app() loaded. """
-        self.assertEqual(str(get_engine().url), 'sqlite:///master.db')
-        self.assertEqual(str(get_engine('slave').url), 'sqlite:///slave.db')
+        self.assertEqual(str(get_engine().url), MASTER)
+        self.assertEqual(str(get_engine('slave').url), SLAVE)
 
     def test_create_engine(self):
-        """ meta.create() should create DB engine. """
-        uri = 'sqlite:///master.db'
+        """ db.create() should create DB engine. """
+        uri = MASTER
         pool_recycle = 3600
         engine = create(uri, echo=False, pool_recycle=pool_recycle)
-        self.assertEqual(str(engine.url), 'sqlite:///master.db')
+        self.assertEqual(str(engine.url), MASTER)
 
 
 class BaseTest(TestCase):
@@ -57,11 +66,15 @@ class BaseTest(TestCase):
         self.app = create_app(config=config)
 
     def tearDown(self):
-        if os.path.exists('./master.db'):
-            os.remove('./master.db')
+        master = '{0}/master.db'.format(PATH)
+        slave = '{0}/slave.db'.format(PATH)
+        if os.path.exists(master):
+            os.remove(master)
 
-        if os.path.exists('./slave.db'):
-            os.remove('./slave.db')
+        if os.path.exists(slave):
+            os.remove(slave)
+
+        remove_engine()
 
     def test_model_insert(self):
         """ Insert data from model. """
@@ -103,3 +116,4 @@ class BaseTest(TestCase):
 
         row = session.query(Person).filter(Person.id==1).one()
         self.assertEqual(row.first_name, foo.first_name)
+        remove_engine('slave')
