@@ -11,7 +11,7 @@
     :license: BSD, see LICENSE for more details.
 """
 import os
-from flask.ext.script import Manager
+from flask.ext.script import Manager, prompt_bool
 from {{project}}.app import create_app
 from {{project}}.models.db import session, Base
 
@@ -38,14 +38,15 @@ def create_generator():
 def create_all():
     """ Create all table. """
     Base.metadata.create_all(bind=session.bind)
-    print('\033[31m{0}\033[0m'.format('Create database success.'))
+    print('\033[32m{0}\033[0m'.format('Create database success.'))
 
 
 @manager.command
 def drop_all():
     """ Drop all table. """
-    Base.metadata.drop_all(bind=session.bind)
-    print('\033[31m{0}\033[0m'.format('Drop database success.'))
+    if prompt_bool('Are you sure you want to lose all your data'):
+        Base.metadata.drop_all(bind=session.bind)
+        print('\033[32m{0}\033[0m'.format('Drop database success.'))
 
 
 @manager.command
