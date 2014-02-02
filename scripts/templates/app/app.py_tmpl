@@ -78,7 +78,7 @@ def configure_settings(app, config):
     """
     Configure application.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     :param config: Configuration.
     """
     if config is not None:
@@ -100,7 +100,7 @@ def configure_session(app):
     """
     Configure Flask session.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     """
     #: If Flask-KVSession support Python3, use Flask-KVSESSION instead.
     config = app.config.get('SESSION_SETTINGS')
@@ -127,7 +127,7 @@ def configure_logging(app):
 
     Logger object set to utils.logging class.
 
-    :param app: Flask object
+    :param app: :class:`flask.Flask`
     """
     formatter = logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s '
@@ -173,8 +173,8 @@ def configure_modules(app, modules):
     """
     Configure modules.
 
-    :param app: Flask object.
-    :param modules: Module list.
+    :param app: :class:`flask.Flask`
+    :param modules: Module list
     """
     for module in modules:
         app.register_blueprint(module)
@@ -184,7 +184,7 @@ def configure_extensions(app):
     """
     Configure Flask extensions.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     """
     #: SQAlchemy
     if 'SQLALCHEMY_DATABASE_URI' in app.config:
@@ -211,7 +211,7 @@ def configure_injector(app, injector=None):
     """
     Configure Flask-Injector for DI Container.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     :param injector: Injector module
     """
     pass
@@ -221,7 +221,7 @@ def configure_i18n(app):
     """
     Configure Babel settings.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     """
     babel = Babel(app)
 
@@ -236,7 +236,7 @@ def configure_middlewares(app):
 
     Middlewares could set in settings.py.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     """
     middlewares = app.config['MIDDLEWARES']
     if not isinstance(middlewares, tuple):
@@ -255,7 +255,7 @@ def configure_errorhandlers(app):
 
     Handling error pages.
 
-    :param app: Flask object.
+    :param app: :class:`flask.Flask`
     """
     r = re.compile(r'^/admin')
 
