@@ -3,21 +3,46 @@
     {{project}}.tests.helper
     {{separator}}
 
-    Helper decorators ..
+    Helpers ..
 
-       - Paramterized test
+       - paramterized
 
-       .. code:
+       .. code: python
 
          @paramterized(param=10, expected=None)
          @paramterized(param=50, expected=None)
          def test_paramterize1d(self, params):
              pass
 
+      - init_db
+
+        Drop and Create table
+
+      - captured_templates
+
+        Capture context of `render_template()`.
+
+        see http://flask.pocoo.org/docs/signals/#subscribing-to-signals
+        more detail.
+
+      .. code: python
+
+        with captured_templates(self.app) as templates:
+            params = ImmutableMultiDict({
+                'name': '', 'password': '', 'csrf_token': self.token
+            })
+            self.client.post('/session/login', data=params)
+
+            template, context = templates[0]
+            self.assertEqual(context['errors']['user'], ['Login failed.'])
+
+
     :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 from functools import wraps
+from flask import template_rendered
+from contextlib import contextmanager
 
 
 def paramterized(**kwargs):
@@ -39,3 +64,15 @@ def init_db(engine_name='default'):
     engine = get_engine(engine_name)
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
+
+
+@contextmanager
+def captured_templates(app):
+    recorded = []
+    def record(sender, template, context, **extra):
+        recorded.append((template, context))
+    template_rendered.connect(record, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(record, app)
