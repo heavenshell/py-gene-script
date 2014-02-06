@@ -5,10 +5,18 @@
 
     see http://flask.pocoo.org/snippets/38/ more details.
 
+    :copyright: (c) 2010 Armin Ronacher
+    :license: Public Domain.
     :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 from werkzeug import url_decode
+from werkzeug.formparser import parse_form_data
+from werkzeug.wsgi import get_input_stream
+try:
+    from io import BytesIO
+except ImportError:
+    from cStringIO import StringIO as BytesIO
 
 
 class MethodRewrite(object):
@@ -35,5 +43,15 @@ class MethodRewrite(object):
             if method:
                 method = method.encode('ascii', 'replace')
                 environ['REQUEST_METHOD'] = method
+        else:
+            if environ['REQUEST_METHOD'].upper() == 'POST':
+                environ['wsgi.input'] = stream = \
+                    BytesIO(get_input_stream(environ).read())
+                formdata = parse_form_data(environ)[1]
+                stream.seek(0)
+
+                method = formdata.get('_method', '').upper()
+                if method in ('GET', 'POST', 'PUT', 'DELETE', 'PATCH'):
+                    environ['REQUEST_METHOD'] = method
 
         return self.app(environ, start_response)
