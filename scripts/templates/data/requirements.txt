@@ -5,7 +5,6 @@ Flask-WTF
 Flask-Mail
 Flask-Script
 Flask-Babel
-Flask-kvsession
 Fabric
 SQLAlchemy
 nose
