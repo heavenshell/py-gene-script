@@ -44,7 +44,7 @@ from functools import wraps
 from contextlib import contextmanager
 from flask import template_rendered
 from redis import Redis
-
+from {{project}}.models.db import Base, get_engine
 
 def paramterized(**kwargs):
     def _paramterized_test(func):
