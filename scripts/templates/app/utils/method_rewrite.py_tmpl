@@ -50,7 +50,7 @@ class MethodRewrite(object):
                 formdata = parse_form_data(environ)[1]
                 stream.seek(0)
 
-                method = formdata.get('_method', '').upper()
+                method = formdata.get(self.input_name, '').upper()
                 if method in ('GET', 'POST', 'PUT', 'DELETE', 'PATCH'):
                     environ['REQUEST_METHOD'] = method
 
