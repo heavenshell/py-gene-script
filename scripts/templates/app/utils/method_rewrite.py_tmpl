@@ -5,7 +5,7 @@
 
     see http://flask.pocoo.org/snippets/38/ more details.
 
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 from werkzeug import url_decode

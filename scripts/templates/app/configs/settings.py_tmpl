@@ -5,7 +5,7 @@
 
     Configuration for application.
 
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import logging

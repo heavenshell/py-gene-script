@@ -37,7 +37,7 @@
             self.assertEqual(context['errors']['user'], ['Login failed.'])
 
 
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 from functools import wraps

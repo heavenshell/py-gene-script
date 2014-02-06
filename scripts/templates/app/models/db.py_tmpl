@@ -20,7 +20,7 @@
 
     :copyright: (c) 2010-2012 Mike Orr and contributors
     :license: MIT, see SQLAHelper's license file for more details.
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import re
