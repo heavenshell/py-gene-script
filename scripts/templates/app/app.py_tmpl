@@ -5,7 +5,10 @@
 
     Application factories.
 
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    Original code is `newsmeme <https://github.com/danjac/newsmeme/>`.
+
+    :copyright: (c) 2010 by Dan Jacob.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import os

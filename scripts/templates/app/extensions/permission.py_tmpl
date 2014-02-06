@@ -5,8 +5,10 @@
 
     Permission settings.
 
+    Original code is `newsmeme <https://github.com/danjac/newsmeme/>`.
 
-    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :copyright: (c) 2010 by Dan Jacob.
+    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 from flask.ext.principal import RoleNeed, Permission
