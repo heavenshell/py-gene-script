@@ -96,7 +96,8 @@ class TestSession(TestCase):
         ret = self.client.get('/store-in-session/foo/bar/')
         sid1 = json.loads(to_unicode(ret.data))['sid']
         with self.client as c:
-            c.set_cookie('localhost', 'session', sid1)
+            c.set_cookie('localhost', self.app.config['SESSION_COOKIE_NAME'],
+                         sid1)
             ret = c.get('/store-in-session/foo/baz/')
             sid2 = json.loads(to_unicode(ret.data))['sid']
 
