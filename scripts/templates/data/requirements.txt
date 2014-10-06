@@ -5,6 +5,8 @@ Flask-WTF
 Flask-Mail
 Flask-Script
 Flask-Babel
+Flask-Injector
+Flask-KVSession
 Fabric
 SQLAlchemy
 nose
@@ -12,7 +14,9 @@ redis
 simplejson
 PyMySQL
 gunicorn
-gevent
 tox
 factory_boy
 bpmappers
+meinheld
+mock
+alembic
