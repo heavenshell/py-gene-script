@@ -16,6 +16,20 @@ from {{project}}.models.db import session
 
 
 class TestCase(BaseTestCase):
+    @classmethod
+    def setup_app(cls, config=None):
+        if config is None:
+            config = TestSettings()
+        app = create_app(config=config)
+        cls.config = config
+        cls.app = app
+        cls.client = app.test_client()
+
+        cls.test_root = os.path.dirname(os.path.abspath(__file__))
+        cls.fixtures_path = os.path.join(cls.test_root, 'fixtures')
+
+        return app
+
     def create_app(self):
         """ Create application. """
         config = TestSettings()

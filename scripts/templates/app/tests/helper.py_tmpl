@@ -40,11 +40,16 @@
     :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
+import re
 from functools import wraps
 from contextlib import contextmanager
 from flask import template_rendered
 from redis import Redis
+from sqlalchemy.engine import reflection
+from sqlalchemy.schema import MetaData, Table, DropTable, \
+    ForeignKeyConstraint, DropConstraint
 from {{project}}.models.db import Base, get_engine
+from {{project}}.utils.compat import to_unicode
 
 def paramterized(**kwargs):
     def _paramterized_test(func):
@@ -63,9 +68,39 @@ def init_db(engine_name='default'):
     :param engine_name: SQLAlchemy's engine name
     """
     engine = get_engine(engine_name)
-    Base.metadata.drop_all(engine)
+    #: Base.metadata.drop_all() can't drop all table which foreign key
+    #: were existed.
+    drop_all(engine)
     Base.metadata.create_all(engine)
 
+
+def get_csrf_token(client, url='/login', id="csrf_token"):
+    """
+    Get csrf token.
+
+    :param client:
+    :param url:
+    """
+    response = client.get(url)
+    pattern = r'id="{0}" name="csrf_token" type="hidden" value="([0-9a-zA-Z-#.]*)"'
+    pattern = pattern.format(id)
+    regex = re.compile(pattern)
+    match = regex.search(to_unicode(response.data))
+
+    return match.groups()[0]
+
+
+def login(client, url='/session/login', **kwargs):
+    """
+    Do login.
+
+    :param client: :class:`flask.Flask.test_client`
+    :param url: Login url
+    :param kwargs: A dict of keyword arguments
+    """
+    response = client.post(url, data=kwargs)
+
+    return response
 
 @contextmanager
 def captured_templates(app):
@@ -89,3 +124,51 @@ def flush_session(host='localhost', port=6379, db=10):
     """
     redis = Redis(host=host, port=int(port), db=db)
     redis.flushdb()
+
+
+def drop_all(engine):
+    """
+    Drop all tables.
+
+    This function is instead of `Base.metadata.drop_all()`.
+    `Base.metadata.drop_all()` did not consider foreign key constraint.
+
+    See also
+      https://bitbucket.org/zzzeek/sqlalchemy/wiki/UsageRecipes/DropEverything
+
+    :param engine: DB engine
+    :param metadata: Metadata
+    """
+    conn = engine.connect()
+
+    # the transaction only applies if the DB supports
+    # transactional DDL, i.e. Postgresql, MS SQL Server
+    trans = conn.begin()
+
+    inspector = reflection.Inspector.from_engine(engine)
+    tbs = []
+    all_fks = []
+
+    # gather all data first before dropping anything.
+    # some DBs lock after things have been dropped in
+    # a transaction.
+    metadata = MetaData()
+
+    for table_name in inspector.get_table_names():
+        fks = []
+        for fk in inspector.get_foreign_keys(table_name):
+            if not fk['name']:
+                continue
+            fks.append(ForeignKeyConstraint((), (), name=fk['name']))
+
+        t = Table(table_name, metadata, *fks)
+        tbs.append(t)
+        all_fks.extend(fks)
+
+    for fkc in all_fks:
+        conn.execute(DropConstraint(fkc))
+
+    for table in tbs:
+        conn.execute(DropTable(table))
+
+    trans.commit()
