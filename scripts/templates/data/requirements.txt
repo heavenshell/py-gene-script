@@ -20,3 +20,4 @@ bpmappers
 meinheld
 mock
 alembic
+autopep8
