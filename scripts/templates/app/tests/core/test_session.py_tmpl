@@ -79,8 +79,7 @@ class TestSession(TestCase):
 
     def test_session_inteface_should_be_redis(self):
         """ {{project}}.app.session_interface should be RedisSessionInterface. """
-        app = create_app()
-        self.assertIsInstance(app.session_interface, RedisSessionInterface)
+        self.assertIsInstance(self.app.session_interface, RedisSessionInterface)
 
     def test_session_should_save_to_redis(self):
         """ Session should store to Redis. """
