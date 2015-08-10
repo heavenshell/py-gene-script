@@ -33,6 +33,9 @@ class Settings(object):
     #: Cache timeout second.
     CACHE_DEFAULT_TIMEOUT = 300
 
+    #: WTForms csrf methods.
+    WTF_CSRF_METHODS = ['POST', 'PUT', 'DELETE', 'PATCH']
+
     #: Lang.
     LANGS = ['ja', 'ja_JP', 'en']
 
@@ -48,6 +51,16 @@ class Settings(object):
         'prefix': '{{project}}:session:'
     }
 
+    #: Permission settings.
+    ROLES = {
+        'member': 100,
+        'admin': 200,
+        'superuser': 900
+    }
+
+    #: Pagination per page.
+    PER_PAGE = 20
+
 
 class DevelopmentSettings(Settings):
     #: Debug mode
@@ -57,4 +70,5 @@ class DevelopmentSettings(Settings):
 
 class TestSettings(Settings):
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}_test?charset=utf8&use_unicode=0'
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
+    LOG_LEVEL = logging.CRITICAL
