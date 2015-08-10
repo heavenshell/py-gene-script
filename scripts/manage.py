@@ -6,11 +6,11 @@
 
     Generat Flask project/file.
 
-    A lot of generator did not generate Sphinx header.
+    A lot of Flask project generator did not generate Sphinx header.
     But I want to generate Sphinx header.
     That's why I reinventing the wheel.
 
-    :copyright: (c) 2014 Shinya Ohyanagi, All rights reserved.
+    :copyright: (c) 2015 Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import os
