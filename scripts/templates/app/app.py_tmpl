@@ -75,6 +75,8 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
 
         return response
 
+    app.logger.info('Initialize app success.')
+
     return app
 
 
@@ -157,6 +159,9 @@ def configure_logging(app):
         app.config['ERROR_LOG'] = 'logs/error.log'
 
     debug_log = os.path.join(root_path, app.config['DEBUG_LOG'])
+    debug_log_root_path = os.path.dirname(debug_log)
+    if not os.path.exists(debug_log_root_path):
+        os.makedirs(debug_log_root_path)
 
     debug_file_handler = RotatingFileHandler(debug_log, maxBytes=100000,
                                              backupCount=10)
@@ -166,6 +171,9 @@ def configure_logging(app):
     app.logger.addHandler(debug_file_handler)
 
     error_log = os.path.join(root_path, app.config['ERROR_LOG'])
+    error_log_root_path = os.path.dirname(error_log)
+    if not os.path.exists(error_log_root_path):
+        os.makedirs(error_log_root_path)
     error_file_handler = RotatingFileHandler(error_log, maxBytes=100000,
                                              backupCount=10)
 
@@ -176,6 +184,10 @@ def configure_logging(app):
     logger = logging.getLogger(app.logger_name)
     logger.addHandler(debug_file_handler)
     logger.addHandler(error_file_handler)
+
+    logger.info('Initialize logger.')
+    logger.info('debug.log is `{0}`.'.format(app.config['DEBUG_LOG']))
+    logger.info('error.log is `{0}`.'.format(app.config['ERROR_LOG']))
 
 
 def configure_modules(app, modules):
@@ -198,13 +210,17 @@ def configure_extensions(app):
     #: SQAlchemy
     if 'SQLALCHEMY_DATABASE_URI' in app.config:
         init_engine(app.config)
+        app.logger.info('Initialize SQLAlchemy success.')
 
     #: Cache
     if 'CACHE_TYPE' in app.config:
         cache.init_app(app)
+        app.logger.info('Initialize cache success.')
+        app.logger.info('Cache type is `{0}`.'.format(app.config['CACHE_TYPE']))
 
     #: CSRF protection
     csrf.init_app(app)
+    app.logger.info('Initialize CSRF protection success.')
 
     #: Upload
     if 'UPLOADED_FILES_DEST' in app.config:
@@ -214,6 +230,7 @@ def configure_extensions(app):
             uploads_dest = '{0}/var/uploads'.format(root_path)
 
         app.config.update({'UPLOADED_FILES_DEST': uploads_dest})
+        app.logger.info('Upload files dest is `{0}`.'.format(uploads_dest))
 
 
 def configure_injector(app, injector=None):
@@ -238,6 +255,8 @@ def configure_i18n(app):
     def get_locale():
         return request.accept_languages.best_match(app.config.get('LANGS'))
 
+    app.logger.info('Initialize i18n success.')
+
 
 def configure_middlewares(app):
     """
@@ -256,6 +275,8 @@ def configure_middlewares(app):
         name = target[-1]
         klass = getattr(__import__(module, fromlist=[name]), name)
         app.wsgi_app = klass(app)
+
+    app.logger.info('Initialize middleware success.')
 
 
 def configure_errorhandlers(app):
@@ -287,3 +308,5 @@ def configure_errorhandlers(app):
             return render_template('admin/404.html', error=error), 404
 
         return render_template('errors/404.html', error=error), 404
+
+    app.logger.info('Initialize errorhandlers success.')
