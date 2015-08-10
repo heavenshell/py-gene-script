@@ -3,7 +3,7 @@
     gene.compat
     ~~~~~~~~~~~
 
-    Compatible to Python2.6,2.7 and Python3.3
+    Compatible to Python2.6,2.7 and Python3.4
 
     This module is copyed from Werkzeug's `_compat.py`.
 
