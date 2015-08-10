@@ -19,7 +19,8 @@ from logging.handlers import RotatingFileHandler
 from redis import Redis
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
-from {{project}}.utils.session import RedisSessionInterface
+from flask.ext.kvsession import KVSessionExtension
+from simplekv.memory.redisstore import RedisStore
 from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
 from {{project}}.models.db import init_engine, session
@@ -120,8 +121,13 @@ def configure_session(app):
             db = 0
         else:
             db = config['db']
+
         redis = Redis(host=host, port=int(port), db=db)
-        app.session_interface = RedisSessionInterface(redis=redis)
+        store = RedisStore(redis)
+        KVSessionExtension(store, app)
+
+        app.logger.info(redis)
+        app.logger.info('Configure session success.')
 
 
 def configure_logging(app):
