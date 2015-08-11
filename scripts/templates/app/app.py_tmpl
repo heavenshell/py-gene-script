@@ -275,6 +275,7 @@ def configure_middlewares(app):
         name = target[-1]
         klass = getattr(__import__(module, fromlist=[name]), name)
         app.wsgi_app = klass(app)
+        app.logger.info('Register `%s.%s` success.', module, name)
 
     app.logger.info('Initialize middleware success.')
 
