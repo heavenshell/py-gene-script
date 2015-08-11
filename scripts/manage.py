@@ -29,7 +29,7 @@ def red(msg):
     """
     Output red color.
 
-    :param msg:
+    :param msg: Output message
     """
     return '\033[31m{0}\033[0m'.format(msg)
 
@@ -38,7 +38,7 @@ def green(msg):
     """
     Output green color.
 
-    :param msg: Message
+    :param msg: Output message
     """
     return '\033[32m{0}\033[0m'.format(msg)
 
@@ -47,7 +47,7 @@ def grey(msg):
     """
     Output grey color.
 
-    :param msg: Message
+    :param msg: Output message
     """
     return '\033[37m{0}\033[0m'.format(msg)
 
@@ -56,7 +56,7 @@ def output(msg):
     """
     Write message to stdout.
 
-    :param msg: Message
+    :param msg: Output message
     """
     sys.stdout.write('{0}\n'.format(msg))
 
@@ -73,8 +73,8 @@ class Generator(object):
           - Set year
           - Set default author name
 
-        :param file_path:
-        :param author:
+        :param file_path: File path
+        :param author: Author name
         """
         dirname = os.path.dirname
         current_path = dirname(os.path.abspath(__file__))
@@ -172,8 +172,8 @@ class Generator(object):
         """
         Check is file/directory exists.
 
-        :param path:
-        :param file_name:
+        :param path: Directory/File path
+        :param file_name: File name
         """
         if os.path.exists(os.path.join(path, file_name)):
             error = red('{0} already exists in {1}'.format(file_name, path))
@@ -205,9 +205,9 @@ class Generator(object):
         """
         Recrsive files.
 
-        :param project_name:
-        :param project_path:
-        :param project_root:
+        :param project_name: Project name
+        :param project_path: Project path
+        :param project_root: Project root path
         """
         if project_root is None:
             project_root = os.path.dirname(project_path)
@@ -300,9 +300,9 @@ class Generator(object):
         """
         Create file.
 
-        :param project_name:
-        :param file_name:
-        :param category:
+        :param project_name: Project name
+        :param file_name: File name
+        :param category: Category name
         """
         self.validate_name(file_name)
         file_path = os.path.join(self.file_path, project_name, category)
@@ -354,8 +354,8 @@ class Generator(object):
         """
         Create view file.
 
-        :param project_name:
-        :param file_name:
+        :param project_name: Project name
+        :param file_name: File name
         """
         self.create_file(project_name, file_name, category='views')
 
@@ -375,8 +375,8 @@ class Generator(object):
         PUT    /<id> update(id)
         DELETE /<id> delete(id)
 
-        :param project_name:
-        :param file_name:
+        :param project_name: Project name
+        :param file_name: File name
         """
         src = os.path.join(self.tmpl_path, 'rest.py_tmpl')
         self.create_file(project_name, file_name, category='views', src=src)
@@ -391,8 +391,8 @@ class Generator(object):
         """
         Create model file.
 
-        :param project_name:
-        :param file_name:
+        :param project_name: Project name
+        :param file_name: File name
         """
         src = os.path.join(self.tmpl_path, 'models_entity.py_tmpl')
         self.create_file(project_name, file_name, category='models', src=src)
@@ -401,8 +401,8 @@ class Generator(object):
         """
         Create test file.
 
-        :param project_name:
-        :param file_name:
+        :param project_name: Project name
+        :param file_name: File name
         """
         self.create_file(project_name, file_name, category='tests')
 
