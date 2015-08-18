@@ -10,4 +10,5 @@ Create project
 ~~~~~~~~~~~~~~
 
 .. code::
+
   $ python manage.py -p ProjectName -u "Author name"
