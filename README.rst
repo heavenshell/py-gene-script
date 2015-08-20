@@ -14,4 +14,6 @@ Create project
 
 .. code::
 
-  $ python manage.py -p ProjectName -u "Author name"
+  $ https://github.com/heavenshell/py-gene-script.git
+  $ cd py-gene-script
+  $ python manage.py -p PROJECT_NAME -u "Author name"
