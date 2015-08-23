@@ -16,7 +16,7 @@ import re
 import logging
 import simplejson as json
 from logging.handlers import RotatingFileHandler
-from redis import Redis
+from redis import StrictRedis
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
 from flask.ext.kvsession import KVSessionExtension
@@ -124,7 +124,7 @@ def configure_session(app):
         else:
             db = config['db']
 
-        redis = Redis(host=host, port=int(port), db=db)
+        redis = StrictRedis(host=host, port=int(port), db=db)
         store = RedisStore(redis)
         KVSessionExtension(store, app)
 
