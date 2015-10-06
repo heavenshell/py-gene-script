@@ -163,8 +163,9 @@ def configure_logging(app):
     if not os.path.exists(debug_log_root_path):
         os.makedirs(debug_log_root_path)
 
-    debug_file_handler = RotatingFileHandler(debug_log, maxBytes=100000,
-                                             backupCount=10)
+    debug_file_handler = TimedRotatingFileHandler(debug_log, when='D',
+                                                  interval=10,
+                                                  backupCount=10)
 
     debug_file_handler.setLevel(app.config['LOG_LEVEL'])
     debug_file_handler.setFormatter(formatter)
@@ -174,8 +175,10 @@ def configure_logging(app):
     error_log_root_path = os.path.dirname(error_log)
     if not os.path.exists(error_log_root_path):
         os.makedirs(error_log_root_path)
-    error_file_handler = RotatingFileHandler(error_log, maxBytes=100000,
-                                             backupCount=10)
+
+    error_file_handler = TimedRotatingFileHandler(error_log, when='D',
+                                                  interval=10,
+                                                  backupCount=10)
 
     error_file_handler.setLevel(logging.ERROR)
     error_file_handler.setFormatter(formatter)
@@ -186,8 +189,8 @@ def configure_logging(app):
     logger.addHandler(error_file_handler)
 
     logger.info('Initialize logger.')
-    logger.info('debug.log is `{0}`.'.format(app.config['DEBUG_LOG']))
-    logger.info('error.log is `{0}`.'.format(app.config['ERROR_LOG']))
+    logger.info('debug.log is `%s`.', app.config['DEBUG_LOG'])
+    logger.info('error.log is `%s`.', app.config['ERROR_LOG'])
 
 
 def configure_modules(app, modules):
