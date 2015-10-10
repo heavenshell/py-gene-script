@@ -19,10 +19,14 @@ import re
 import shutil
 from datetime import datetime
 from argparse import ArgumentParser
-from _compat import iteritems
+
+if sys.version_info[0] == 2:
+    from _compat import iteritems
+else:
+    from ._compat import iteritems
 
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 
 def red(msg):
