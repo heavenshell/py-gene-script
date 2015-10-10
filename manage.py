@@ -23,7 +23,10 @@ from argparse import ArgumentParser
 if sys.version_info[0] == 2:
     from _compat import iteritems
 else:
-    from ._compat import iteritems
+    try:
+        from ._compat import iteritems
+    except SystemError:
+        from _compat import iteritems
 
 
 __version__ = '0.4'
