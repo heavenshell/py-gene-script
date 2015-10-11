@@ -9,16 +9,39 @@
     :license: BSD, see LICENSE for more details.
 """
 import os
+import sys
 from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
 from {{project}}.app import create_app
 from {{project}}.models.db import session, Base, get_engine, create, remove_engine
 
+if sys.version_info[0] == 2:
+    from cStringIO import StringIO
+else:
+    from io import StringIO
+
 
 PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'var')
 MASTER = 'sqlite:///{0}/master.db'.format(PATH)
 SLAVE = 'sqlite:///{0}/slave.db'.format(PATH)
+
+
+class HookStdOut(object):
+    def __init__(self):
+        self.fp = StringIO()
+        self.orig_stdout = sys.stdout
+        sys.stdout = self.fp
+
+    def dump(self):
+        self.fp.seek(0)
+        return self.fp.read()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        sys.stdout = self.orig_stdout
 
 
 class TestMultiSettings(Settings):
@@ -117,3 +140,18 @@ class BaseTest(TestCase):
         row = session.query(Person).filter(Person.id==1).one()
         self.assertEqual(row.first_name, foo.first_name)
         remove_engine('slave')
+
+
+class RepresentableBaseTest(TestCase):
+    def setUp(self):
+        config = TestMultiSettings()
+        self.app = create_app(config=config)
+
+    def test_should_repr(self):
+        """ print(SQLAlchemy.model) should output object repr. """
+        p = Person(id=1, first_name='foo')
+
+        with HookStdOut() as hook:
+            print(p)
+            data = hook.dump()
+            self.assertEqual(data, "<Person(first_name='foo', id=1)>\n")

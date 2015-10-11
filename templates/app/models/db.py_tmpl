@@ -36,6 +36,26 @@ __all__ = ['Base', 'session', 'init_engine', 'get_engine']
 r = re.compile(r'[^mysql+pymysql].[?|&]use_unicode=')
 
 
+class RepresentableBase(object):
+    def __repr__(self):
+        """
+        Dump all primary keys and columns.
+
+        Referanced by:
+          - https://gist.github.com/exhuma/5935162#file-representable_base-py
+          - http://stackoverflow.com/a/15929677
+        """
+        #: Columns.
+        columns = ', '.join([
+            '{0}={1}'.format(k, repr(self.__dict__[k]))
+            for k in self.__dict__.keys() if k[0] != '_']
+        )
+
+        return '<{0}({1})>'.format(
+            self.__class__.__name__, columns
+        )
+
+
 class AttributeContainer(object):
     def _clear(self):
         """Delete all instance attributes. For internal use only."""
@@ -59,7 +79,7 @@ def reset():
     bases._clear()
     sessions._clear()
     engines.default = None
-    bases.default = declarative_base()
+    bases.default = declarative_base(cls=RepresentableBase)
     sm = sessionmaker(extension=[])
     sessions.default = scoped_session(sm)
 
