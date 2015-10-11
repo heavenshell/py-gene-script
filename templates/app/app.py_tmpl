@@ -299,7 +299,7 @@ def configure_errorhandlers(app):
             return json.dumps(dict(error=_('Sorry, not allowed')))
 
         if r.match(request.path):
-            return render_template('admin/403.html', error=error), 403
+            return render_template('errors/admin/403.html', error=error), 403
 
         return render_template('errors/403.html', error=error), 403
 
@@ -309,7 +309,7 @@ def configure_errorhandlers(app):
             return json.dumps(dict(error=_('404 Page not found')))
 
         if r.match(request.path):
-            return render_template('admin/404.html', error=error), 404
+            return render_template('errors/admin/404.html', error=error), 404
 
         return render_template('errors/404.html', error=error), 404
 
