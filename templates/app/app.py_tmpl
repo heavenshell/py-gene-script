@@ -34,8 +34,8 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
     """
     Create application.
 
-    :param config: Configuration.
-    :param app_name: Application name.
+    :param config: Configuration
+    :param app_name: Application name
     :param modules: View modules.
     """
     if app_name is None:
