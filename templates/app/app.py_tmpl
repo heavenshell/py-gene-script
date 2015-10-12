@@ -236,7 +236,7 @@ def configure_extensions(app):
         app.logger.info('Upload files dest is `{0}`.'.format(uploads_dest))
 
 
-def configure_injector(app, injector=None):
+def configure_injector(app, modules=None):
     """
     Configure Flask-Injector for DI Container.
 
