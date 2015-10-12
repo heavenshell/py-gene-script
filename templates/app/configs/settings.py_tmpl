@@ -19,7 +19,8 @@ class Settings(object):
     SECRET_KEY = 'secret'
 
     #: SQLAlchemy settings.
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}?charset=utf8&use_unicode=0'
+    #: If Python runtime is Python2.7 add ``&use_unicode=0``.
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}?charset=utf8'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_POOL_RECYCLE = 3600
 
@@ -69,6 +70,7 @@ class DevelopmentSettings(Settings):
 
 
 class TestSettings(Settings):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}_test?charset=utf8&use_unicode=0'
+    #: If Python runtime is Python2.7 add ``&use_unicode=0``.
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}_test?charset=utf8'
     SQLALCHEMY_ECHO = False
     LOG_LEVEL = logging.CRITICAL
