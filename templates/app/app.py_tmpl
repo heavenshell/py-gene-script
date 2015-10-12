@@ -19,6 +19,7 @@ from logging.handlers import TimedRotatingFileHandler
 from redis import StrictRedis
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
+from flask.ext.principal import Principal, identity_loaded, RoleNeed
 from flask.ext.kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 from {{project}}.configs.settings import Settings
@@ -244,6 +245,29 @@ def configure_injector(app, injector=None):
     :param injector: Injector module
     """
     pass
+
+
+def configure_identity(app):
+    """
+    Configure identity.
+
+    :param app: :class:`flask.Flask`
+    """
+    Principal(app)
+
+    @identity_loaded.connect_via(app)
+    def on_identity_loaded(sender, identity):
+        role = identity.id
+        app.logger.debug('Permission is `%s`.', identity)
+
+        roles = app.config.get('ROLES')
+        for name, value in iteritems(roles):
+            if role >= value:
+                print(role, value)
+                print(RoleNeed(name))
+                identity.provides.add(RoleNeed(name))
+
+    app.logger.info('Initialize identity success.')
 
 
 def configure_i18n(app):
