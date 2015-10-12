@@ -25,7 +25,7 @@ class Settings(object):
 
     #: Logger.
     LOG_LEVEL = logging.INFO
-    DEBUG_LOG = 'logs/debug.log'
+    APP_LOG = 'logs/app.log'
     ERROR_LOG = 'logs/error.log'
 
     #: Cache settings.

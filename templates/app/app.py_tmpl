@@ -152,8 +152,8 @@ def configure_logging(app):
 
     root_path = os.path.dirname(app.root_path)
 
-    if 'DEBUG_LOG' not in app.config:
-        app.config['DEBUG_LOG'] = 'logs/debug.log'
+    if 'APP_LOG' not in app.config:
+        app.config['APP_LOG'] = 'logs/app.log'
 
     if 'ERROR_LOG' not in app.config:
         app.config['ERROR_LOG'] = 'logs/error.log'
