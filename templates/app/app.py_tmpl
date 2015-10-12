@@ -47,8 +47,8 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
     app = Flask(app_name)
 
     configure_settings(app, config)
-    configure_session(app)
     configure_logging(app)
+    configure_session(app)
     configure_extensions(app)
     configure_modules(app, modules)
     configure_errorhandlers(app)
