@@ -158,7 +158,7 @@ def configure_logging(app):
     if 'ERROR_LOG' not in app.config:
         app.config['ERROR_LOG'] = 'logs/error.log'
 
-    debug_log = os.path.join(root_path, app.config['DEBUG_LOG'])
+    debug_log = os.path.join(root_path, app.config['APP_LOG'])
     debug_log_root_path = os.path.dirname(debug_log)
     if not os.path.exists(debug_log_root_path):
         os.makedirs(debug_log_root_path)
@@ -189,7 +189,7 @@ def configure_logging(app):
     logger.addHandler(error_file_handler)
 
     logger.info('Initialize logger.')
-    logger.info('debug.log is `%s`.', app.config['DEBUG_LOG'])
+    logger.info('debug.log is `%s`.', app.config['APP_LOG'])
     logger.info('error.log is `%s`.', app.config['ERROR_LOG'])
 
 

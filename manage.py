@@ -29,7 +29,7 @@ else:
         from _compat import iteritems
 
 
-__version__ = '0.5'
+__version__ = '0.5.1'
 
 
 def red(msg):
