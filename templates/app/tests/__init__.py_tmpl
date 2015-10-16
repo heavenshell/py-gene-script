@@ -40,6 +40,12 @@ class TestCase(BaseTestCase):
 
         return app
 
+    def get_session(self):
+        return session
+
+    def remove_session(self):
+        session.remove()
+
     def execute_sql(self, filename):
         """
         Execute raw sql file.
