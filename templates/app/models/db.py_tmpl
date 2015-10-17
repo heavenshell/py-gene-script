@@ -37,6 +37,10 @@ r = re.compile(r'[^mysql+pymysql].[?|&]use_unicode=')
 
 
 class RepresentableBase(object):
+    #: MySQL's specific args.
+    #: Declare for table creation.
+    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_row_format': 'DYNAMIC'}
+
     def __repr__(self):
         """
         Dump all primary keys and columns.
