@@ -129,7 +129,7 @@ def configure_session(app):
         KVSessionExtension(store, app)
 
         app.logger.info(redis)
-        app.logger.info('Configure session success.')
+    app.logger.info('Configure session success.')
 
 
 def configure_logging(app):
