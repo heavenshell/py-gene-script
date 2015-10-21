@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.utils.redis
+    {{separator}}
+
+    Redis configure.
+
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from redis import StrictRedis
+
+
+def configure_redis(config, key='REDIS_SETTINGS'):
+    """
+    Configure.
+
+    :param config: Config
+    :param key: Key
+    """
+    if key in config:
+        if 'url' not in config[key]:
+            url = '127.0.0.1:6379'
+        else:
+            url = config[key]['url']
+        host, port = url.split(':')
+        if 'db' not in config:
+            db = 0
+        else:
+            db = config[key]['db']
+    else:
+        if 'url' not in config:
+            url = '127.0.0.1:6379'
+        else:
+            url = config['url']
+        host, port = url.split(':')
+        if 'db' not in config:
+            db = 0
+        else:
+            db = config['db']
+
+    client = StrictRedis(host=host, port=int(port), db=db)
+
+    return client

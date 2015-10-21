@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+"""
+    {{project}}.tests.core.test_redis
+    {{separator}}
+
+    Tests for Redis.
+
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
+    :license: BSD, see LICENSE for more details.
+"""
+from unittest import TestCase
+from {{project}}.configs.settings import Settings
+from {{project}}.utils.redis import configure_redis
+
+
+class TestSettings(Settings):
+    #: Redis settings
+    REDIS_SETTINGS = {
+        'prefix': '{{project}}:',
+        'url': 'localhost:6379',
+        'db': 100
+    }
+
+
+class TestSettingsDefault(Settings):
+    REDIS_SETTINGS = {
+        'prefix': '{{project}}:',
+    }
+
+
+class TestRedis(TestCase):
+    def setUp(self):
+        config = TestSettings()
+        self.app = create_app(config=config)
+        self.config = self.app.config
+
+
+    def test_should_create_redis_instance(self):
+        """ configure(config) should create Redis client. """
+        client = configure_redis(self.config)
+        from redis import StrictRedis
+        self.assertTrue(isinstance(client, StrictRedis))
+
+
+class TestRedisDefault(TestCase):
+    def setUp(self):
+        config = TestSettingsDefault()
+        self.app = create_app(config=config)
+        self.config = self.app.config
+
+
+    def test_should_create_redis_instance(self):
+        """ configure(config) should create Redis client by default settings. """
+        client = configure_redis(self.config)
+        from redis import StrictRedis
+        self.assertTrue(isinstance(client, StrictRedis))
