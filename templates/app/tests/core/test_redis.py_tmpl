@@ -18,7 +18,7 @@ class TestSettings(Settings):
     REDIS_SETTINGS = {
         'prefix': '{{project}}:',
         'url': 'localhost:6379',
-        'db': 100
+        'db': 10
     }
 
 
@@ -40,6 +40,7 @@ class TestRedis(TestCase):
         client = configure_redis(self.config)
         from redis import StrictRedis
         self.assertTrue(isinstance(client, StrictRedis))
+        self.assertEqual(client.connection_pool.connection_kwargs['db'], 10)
 
 
 class TestRedisDefault(TestCase):
@@ -54,3 +55,4 @@ class TestRedisDefault(TestCase):
         client = configure_redis(self.config)
         from redis import StrictRedis
         self.assertTrue(isinstance(client, StrictRedis))
+        self.assertEqual(client.connection_pool.connection_kwargs['db'], 0)

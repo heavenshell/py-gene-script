@@ -25,7 +25,7 @@ def configure_redis(config, key='REDIS_SETTINGS'):
         else:
             url = config[key]['url']
         host, port = url.split(':')
-        if 'db' not in config:
+        if 'db' not in config[key]:
             db = 0
         else:
             db = config[key]['db']
