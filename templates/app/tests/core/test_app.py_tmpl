@@ -19,7 +19,7 @@ from {{project}}.models.db import get_engine
 class TestDBSettings(TestSettings):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///master.db'
     SQLALCHEMY_ECHO = False
-    DEBUG_LOG = '{{project}}/tests/core/var/logs/debug.log'
+    APP_LOG = '{{project}}/tests/core/var/logs/app.log'
     ERROR_LOG = '{{project}}/tests/core/var/logs/error.log'
     LOG_LEVEL = logging.DEBUG
 
@@ -59,11 +59,11 @@ class TestApp(TestCase):
         expected = self.data_dir + '/data/'
         self.assertEqual(app.config['DATA_DIR'], expected)
 
-    def test_debug_log_does_not_exists_in_settings(self):
-        """ Default DEBUG_LOG should be set if not exists in settings. """
+    def test_app_log_does_not_exists_in_settings(self):
+        """ Default APP_LOG should be set if not exists in settings. """
         config = TestMinSettings()
         app = create_app(config=config)
-        self.assertEqual(app.config['DEBUG_LOG'], 'logs/debug.log')
+        self.assertEqual(app.config['APP_LOG'], 'logs/app.log')
 
     def test_error_log_does_not_exists_in_settings(self):
         """ Default ERROR_LOG should set if not exists in settings. """
