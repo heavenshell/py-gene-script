@@ -16,7 +16,6 @@ import re
 import logging
 import simplejson as json
 from logging.handlers import TimedRotatingFileHandler
-from redis import StrictRedis
 from flask import Flask, request, render_template
 from flask.ext.babel import Babel, gettext as _
 from flask.ext.principal import Principal, identity_loaded, RoleNeed
@@ -26,6 +25,7 @@ from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
 from {{project}}.models.db import init_engine, session
 from {{project}}.views import views
+from {{project}}.utils.redis import configure_redis
 
 __all__ = ['create_app']
 
@@ -114,17 +114,7 @@ def configure_session(app):
         return
 
     if config['type'] == 'redis':
-        if 'url' not in config:
-            url = '127.0.0.1:6379'
-        else:
-            url = config['url']
-        host, port = url.split(':')
-        if 'db' not in config:
-            db = 0
-        else:
-            db = config['db']
-
-        redis = StrictRedis(host=host, port=int(port), db=db)
+        redis = configure_redis(config, 'SESSION_SETTINGS')
         store = RedisStore(redis)
         KVSessionExtension(store, app)
 
