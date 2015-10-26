@@ -36,7 +36,7 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
 
     :param config: Configuration
     :param app_name: Application name
-    :param modules: View modules.
+    :param modules: View modules
     """
     if app_name is None:
         app_name = '{{project}}'
@@ -200,22 +200,22 @@ def configure_extensions(app):
 
     :param app: :class:`flask.Flask`
     """
-    #: SQAlchemy
+    #: SQAlchemy settings.
     if 'SQLALCHEMY_DATABASE_URI' in app.config:
         init_engine(app.config)
         app.logger.info('Initialize SQLAlchemy success.')
 
-    #: Cache
+    #: Cache settings.
     if 'CACHE_TYPE' in app.config:
         cache.init_app(app)
         app.logger.info('Initialize cache success.')
         app.logger.info('Cache type is `{0}`.'.format(app.config['CACHE_TYPE']))
 
-    #: CSRF protection
+    #: CSRF protection settings.
     csrf.init_app(app)
     app.logger.info('Initialize CSRF protection success.')
 
-    #: Upload
+    #: Upload settings.
     if 'UPLOADED_FILES_DEST' in app.config:
         root_path = os.path.dirname(app.root_path)
         uploads_dest = app.config.get('UPLOADED_FILES_DEST')
