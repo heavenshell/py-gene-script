@@ -16,7 +16,7 @@ import re
 import logging
 import simplejson as json
 from logging.handlers import TimedRotatingFileHandler
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 from flask.ext.babel import Babel, gettext as _
 from flask.ext.principal import Principal, identity_loaded, RoleNeed
 from flask.ext.kvsession import KVSessionExtension
