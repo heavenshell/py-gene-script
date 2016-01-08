@@ -16,7 +16,7 @@ class Settings(object):
     DEBUG = False
 
     #: Secret key.
-    SECRET_KEY = 'secret'
+    SECRET_KEY = 'secret_{{project}}'
 
     #: SQLAlchemy settings.
     #: If Python runtime is Python2.7 add ``&use_unicode=0``.
