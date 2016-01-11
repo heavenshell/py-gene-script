@@ -53,6 +53,7 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
     configure_modules(app, modules)
     configure_errorhandlers(app)
     configure_injector(app, injector)
+    configure_jinja2(app)
 
     if 'LANGS' in app.config:
         configure_i18n(app)
