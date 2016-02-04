@@ -25,13 +25,14 @@
 """
 import re
 import warnings
+from contextlib import contextmanager
 from werkzeug.urls import url_parse
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from {{project}}.utils.compat import iteritems, PY2
 
-__all__ = ['Base', 'session', 'init_engine', 'get_engine']
+__all__ = ['Base', 'Session', 'session', 'init_engine', 'get_engine']
 
 r = re.compile(r'[^mysql+pymysql].[?|&]use_unicode=')
 
@@ -126,7 +127,8 @@ def set_base(base):
 reset()
 
 #: SQLAlchemy session manager.
-session = get_session()
+Session = get_session()
+session = Session()
 
 #: The declarative Base
 Base = get_base()
@@ -187,3 +189,18 @@ def init_engine(config):
         for k, v in iteritems(binds):
             engine = create(v, **configs)
             add_engine(engine, k)
+
+
+@contextmanager
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    _ession = Session()
+    try:
+        yield session
+        _session.commit()
+        _session.expunge_all()
+    except:
+        _session.rollback()
+        raise
+    finally:
+        _session.close()
