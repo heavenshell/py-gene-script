@@ -77,9 +77,12 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
 
     @app.teardown_request
     def session_clear(exception=None):
-        Sesson.remove()
         if exception and Session.is_active:
             session.rollback()
+        else:
+          session.commit()
+        session.close()
+        Sesson.remove()
 
     app.logger.info('Initialize app success.')
 
