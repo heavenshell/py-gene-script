@@ -85,7 +85,7 @@ def reset():
     sessions._clear()
     engines.default = None
     bases.default = declarative_base(cls=RepresentableBase)
-    sm = sessionmaker(extension=[])
+    sm = sessionmaker(extension=[], expire_on_commit=False)
     sessions.default = scoped_session(sm)
 
 
@@ -194,10 +194,9 @@ def init_engine(config):
 @contextmanager
 def session_scope():
     """Provide a transactional scope around a series of operations."""
-    _ession = Session()
+    _session = Session()
     try:
-        yield session
-        _session.expire_on_commit = False
+        yield _session
         _session.commit()
     except:
         _session.rollback()
