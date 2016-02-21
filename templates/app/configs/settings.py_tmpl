@@ -9,22 +9,32 @@
     :license: BSD, see LICENSE for more details.
 """
 import logging
+from datetime import timedelta
 
 
 class Settings(object):
-    #: Debug mode
+    #: Debug mode.
     DEBUG = False
 
     #: Secret key.
     SECRET_KEY = 'secret_{{project}}'
+
+    #: Cookie settins.
+    SESSION_COOKIE_NAME = '{{project}}'
+    SESSION_COOKIE_HTTPONLY = True
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=24)
+    #: This can only used in HTTPS environ.
+    SESSION_COOKIE_SECURE = False
 
     #: SQLAlchemy settings.
     #: If Python runtime is Python2.7 add ``&use_unicode=0``.
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}?charset=utf8'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_POOL_RECYCLE = 60
+    SQLALCHEMY_POOL_SIZE = 20
+    SQLALCHEMY_POOL_TIMEOUT = 10
 
-    #: Logger.
+    #: Logger settings.
     LOG_LEVEL = logging.INFO
     APP_LOG = 'logs/app.log'
     ERROR_LOG = 'logs/error.log'

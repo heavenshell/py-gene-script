@@ -82,7 +82,6 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
         else:
           session.commit()
         session.close()
-        Sesson.remove()
 
     app.logger.info('Initialize app success.')
 
