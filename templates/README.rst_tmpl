@@ -14,7 +14,7 @@ manage.py would support server commands. ::
 
 Using in productions, use `Supervisor <http://supervisord.org/>_`.
 
-Running with `Gunicorn <http://gunicorn.org>_` and `meinheld <http://meinheld.org>`_. ::
+Running with `Gunicorn <http://gunicorn.org>_` and `meinheld <http://meinheld.org>_`. ::
 
   $ supervisorctl -c data/supervisord.conf manage:app
 
@@ -39,7 +39,7 @@ create following files to {{project}}/views/.
 
 If you want to create RESTful views.
 
-For example::
+For example ::
 
   $ python manage.py rest -n api/bar
 
