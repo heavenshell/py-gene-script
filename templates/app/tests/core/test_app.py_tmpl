@@ -22,6 +22,8 @@ class TestDBSettings(TestSettings):
     APP_LOG = '{{project}}/tests/core/var/logs/app.log'
     ERROR_LOG = '{{project}}/tests/core/var/logs/error.log'
     LOG_LEVEL = logging.DEBUG
+    SQLALCHEMY_POOL_SIZE = None
+    SQLALCHEMY_POOL_TIMEOUT = None
 
 
 class TestMinSettings(object):

@@ -50,7 +50,8 @@ class TestMultiSettings(Settings):
         'slave': SLAVE
     }
     SQLALCHEMY_ECHO = False
-
+    SQLALCHEMY_POOL_SIZE = None
+    SQLALCHEMY_POOL_TIMEOUT = None
 
 class Person(Base):
     __tablename__ = 'core_test_people'
