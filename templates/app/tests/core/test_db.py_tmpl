@@ -10,6 +10,7 @@
 """
 import os
 import sys
+import re
 from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
