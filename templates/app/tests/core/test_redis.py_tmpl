@@ -9,6 +9,7 @@
     :license: BSD, see LICENSE for more details.
 """
 from unittest import TestCase
+from {{project}}.app import create_app
 from {{project}}.configs.settings import Settings
 from {{project}}.utils.redis import configure_redis
 

@@ -152,7 +152,11 @@ class RepresentableBaseTest(TestCase):
         """ print(SQLAlchemy.model) should output object repr. """
         p = Person(id=1, first_name='foo')
 
+        data = ''
         with HookStdOut() as hook:
             print(p)
             data = hook.dump()
-            self.assertEqual(data, "<Person(first_name='foo', id=1)>\n")
+
+        pattern = r"^<Person\((id=1, first_name='foo'|first_name='foo', id=1)\)"
+        ret = re.match(pattern, data)
+        self.assertIsNotNone(ret)
