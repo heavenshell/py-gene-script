@@ -15,7 +15,8 @@ from unittest import TestCase
 from sqlalchemy import Column, Integer, String
 from {{project}}.configs.settings import Settings
 from {{project}}.app import create_app
-from {{project}}.models.db import session, Base, get_engine, create, remove_engine
+from {{project}}.models.db import Session, session, Base, get_engine, \
+    create, remove_engine
 
 if sys.version_info[0] == 2:
     from cStringIO import StringIO
@@ -135,7 +136,7 @@ class BaseTest(TestCase):
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
 
-        session.configure(bind=engine)
+        Session.configure(bind=engine)
         session.add_all([foo, bar])
         session.commit()
 
