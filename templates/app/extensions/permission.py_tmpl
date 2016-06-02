@@ -11,7 +11,7 @@
     :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
-from flask.ext.principal import RoleNeed, Permission
+from flask_principal import RoleNeed, Permission
 
 admin = Permission(RoleNeed('admin'))
 auth = Permission(RoleNeed('authenticated'))

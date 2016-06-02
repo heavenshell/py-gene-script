@@ -16,9 +16,9 @@ import re
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from flask import Flask, request, render_template, url_for, json
-from flask.ext.babel import Babel, gettext as _
-from flask.ext.principal import Principal, identity_loaded, RoleNeed
-from flask.ext.kvsession import KVSessionExtension
+from flask_babel import Babel, gettext as _
+from flask_principal import Principal, identity_loaded, RoleNeed
+from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
