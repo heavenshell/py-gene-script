@@ -14,7 +14,6 @@ from redis import Redis
 from flask import Flask, session
 from unittest import TestCase
 from {{project}}.configs.settings import TestSettings as Settings
-from {{project}}.app import create_app
 from {{project}}.utils.session import RedisSessionInterface
 from {{project}}.utils.compat import to_unicode
 
