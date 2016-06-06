@@ -21,3 +21,4 @@ meinheld
 mock
 alembic
 autopep8
+fakeredis

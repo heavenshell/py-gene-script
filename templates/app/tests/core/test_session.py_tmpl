@@ -10,7 +10,7 @@
 """
 import json
 import pickle
-from redis import Redis
+from fakeredis import FakeRedis as Redis
 from flask import Flask, session
 from unittest import TestCase
 from {{project}}.configs.settings import TestSettings as Settings
