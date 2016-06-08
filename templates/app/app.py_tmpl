@@ -79,7 +79,8 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
         if exception and Session.is_active:
             session.rollback()
 
-        session.close()
+        Session.close()
+        Session.remove()
 
     app.logger.info('Initialize app success.')
 
