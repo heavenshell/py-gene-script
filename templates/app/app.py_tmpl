@@ -24,6 +24,7 @@ from {{project}}.configs.settings import Settings
 from {{project}}.extensions import cache, csrf
 from {{project}}.models.db import init_engine, Session, session
 from {{project}}.views import views
+from {{project}}.utils.compat import iteritems
 from {{project}}.utils.redis import configure_redis
 
 __all__ = ['create_app']
@@ -258,8 +259,7 @@ def configure_identity(app):
         roles = app.config.get('ROLES')
         for name, value in iteritems(roles):
             if role >= value:
-                print(role, value)
-                print(RoleNeed(name))
+                app.logger.debug('Role is `%`, value is `%s`.' role, value)
                 identity.provides.add(RoleNeed(name))
 
     app.logger.info('Initialize identity success.')
