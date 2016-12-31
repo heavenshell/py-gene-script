@@ -69,8 +69,8 @@ backlog = 2048
 #       A positive integer. Generally set in the 1-5 seconds range.
 #
 
-#worker_class = 'egg:gunicorn#sync'
-#worker_class = 'egg:meinheld#gunicorn_worker'
+# worker_class = 'egg:gunicorn#sync'
+# worker_class = 'egg:meinheld#gunicorn_worker'
 workers = 1
 worker_class = 'egg:gunicorn#gevent'
 worker_connections = 1000

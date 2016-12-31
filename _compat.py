@@ -18,17 +18,17 @@ PY2 = sys.version_info[0] == 2
 
 
 if PY2:
-    text_type = unicode
+    text_type = unicode  # noqa
 
-    iterkeys = lambda d: d.iterkeys()
-    itervalues = lambda d: d.itervalues()
-    iteritems = lambda d: d.iteritems()
+    iterkeys = lambda d: d.iterkeys() # noqa
+    itervalues = lambda d: d.itervalues() # noqa
+    iteritems = lambda d: d.iteritems() # noqa
 else:
     text_type = str
 
-    iterkeys = lambda d: iter(d.keys())
-    itervalues = lambda d: iter(d.values())
-    iteritems = lambda d: iter(d.items())
+    iterkeys = lambda d: iter(d.keys()) # noqa
+    itervalues = lambda d: iter(d.values()) # noqa
+    iteritems = lambda d: iter(d.items()) # noqa
 
 
 def to_unicode(x, charset=sys.getdefaultencoding(), errors='strict',
