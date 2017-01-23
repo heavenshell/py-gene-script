@@ -259,7 +259,7 @@ def configure_identity(app):
         roles = app.config.get('ROLES')
         for name, value in iteritems(roles):
             if role >= value:
-                app.logger.debug('Role is `%`, value is `%s`.' role, value)
+                app.logger.debug('Role is `%`, value is `%s`.', role, value)
                 identity.provides.add(RoleNeed(name))
 
     app.logger.info('Initialize identity success.')

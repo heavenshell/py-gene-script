@@ -132,6 +132,7 @@ session = Session()
 
 #: The declarative Base
 Base = get_base()
+Base.query = Session.query_property()
 
 
 def create(uri, **kwargs):

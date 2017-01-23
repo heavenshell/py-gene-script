@@ -144,6 +144,15 @@ class BaseTest(TestCase):
         self.assertEqual(row.first_name, foo.first_name)
         remove_engine('slave')
 
+    def test_query_property(self):
+        Base.metadata.create_all()
+        foo = Person(id=1, first_name='foo')
+        session.add(foo)
+        session.commit()
+
+        entry = Person.query.first()
+        self.assertEqual(entry.first_name, foo.first_name)
+
 
 class RepresentableBaseTest(TestCase):
     def setUp(self):
