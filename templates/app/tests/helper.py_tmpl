@@ -51,6 +51,7 @@ from sqlalchemy.schema import MetaData, Table, DropTable, \
 from {{project}}.models.db import Base, get_engine
 from {{project}}.utils.compat import to_unicode
 
+
 def paramterized(**kwargs):
     def _paramterized_test(func):
         @wraps(func)
@@ -102,11 +103,14 @@ def login(client, url='/session/login', **kwargs):
 
     return response
 
+
 @contextmanager
 def captured_templates(app):
     recorded = []
+
     def record(sender, template, context, **extra):
         recorded.append((template, context))
+
     template_rendered.connect(record, app)
     try:
         yield recorded

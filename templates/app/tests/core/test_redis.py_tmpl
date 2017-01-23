@@ -35,7 +35,6 @@ class TestRedis(TestCase):
         self.app = create_app(config=config)
         self.config = self.app.config
 
-
     def test_should_create_redis_instance(self):
         """ configure(config) should create Redis client. """
         client = configure_redis(self.config)
@@ -49,7 +48,6 @@ class TestRedisDefault(TestCase):
         config = TestSettingsDefault()
         self.app = create_app(config=config)
         self.config = self.app.config
-
 
     def test_should_create_redis_instance(self):
         """ configure(config) should create Redis client by default settings. """

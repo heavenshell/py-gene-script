@@ -55,6 +55,7 @@ class TestMultiSettings(Settings):
     SQLALCHEMY_POOL_SIZE = None
     SQLALCHEMY_POOL_TIMEOUT = None
 
+
 class Person(Base):
     __tablename__ = 'core_test_people'
     id = Column(Integer, primary_key=True)
@@ -111,7 +112,7 @@ class BaseTest(TestCase):
         session.add_all([foo, bar])
         session.commit()
 
-        row = session.query(Person).filter(Person.id==1).one()
+        row = session.query(Person).filter(Person.id==1).one()  # noqa E225
         self.assertEqual(row.first_name, foo.first_name)
 
     def test_model_find(self):
@@ -140,7 +141,7 @@ class BaseTest(TestCase):
         session.add_all([foo, bar])
         session.commit()
 
-        row = session.query(Person).filter(Person.id==1).one()
+        row = session.query(Person).filter(Person.id==1).one()  # noqa E225
         self.assertEqual(row.first_name, foo.first_name)
         remove_engine('slave')
 
