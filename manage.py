@@ -24,9 +24,9 @@ if sys.version_info[0] == 2:
     from _compat import iteritems
 else:
     try:
-        from ._compat import iteritems
-    except SystemError:
         from _compat import iteritems
+    except ModuleNotFoundError:
+        from ._compat import iteritems
 
 
 __version__ = '0.5.7'
