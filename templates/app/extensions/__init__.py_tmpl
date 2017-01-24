@@ -8,10 +8,10 @@
     :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
-from flask_cache import Cache
-from flask_wtf import CsrfProtect
+from flask_caching import Cache
+from flask_wtf import CSRFProtect
 
 __all__ = ['cache', 'csrf']
 
 cache = Cache()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
