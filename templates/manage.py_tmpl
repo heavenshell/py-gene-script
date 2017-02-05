@@ -22,7 +22,7 @@ __author__ = '{{author}}'
 config = None
 if '{{project_upper}}_APP_CONFIG' in os.environ:
     config = os.environ['{{project_upper}}_APP_CONFIG']
-else if os.path.exists('./{{project}}/configs/local.py'):
+elif os.path.exists('./{{project}}/configs/local.py'):
     from {{project}}.configs.local import LocalSetting
     config = LocalSetting()
 
