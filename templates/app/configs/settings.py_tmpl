@@ -49,6 +49,7 @@ class Settings(object):
 
     #: Lang.
     LANGS = ['ja', 'ja_JP', 'en']
+    BABEL_TRANSLATION_DIRECTORIES = 'i18n'
 
     DATA_DIR = '{root}/data/'
 
