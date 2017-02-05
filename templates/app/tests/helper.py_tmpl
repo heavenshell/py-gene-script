@@ -63,8 +63,7 @@ def paramterized(**kwargs):
 
 
 def init_db(engine_name='default'):
-    """
-    Initialize database.
+    """Initialize database.
 
     :param engine_name: SQLAlchemy's engine name
     """
@@ -76,8 +75,7 @@ def init_db(engine_name='default'):
 
 
 def get_csrf_token(client, url='/login', id="csrf_token"):
-    """
-    Get csrf token.
+    """Get csrf token.
 
     :param client:
     :param url:
@@ -92,8 +90,7 @@ def get_csrf_token(client, url='/login', id="csrf_token"):
 
 
 def login(client, url='/session/login', **kwargs):
-    """
-    Do login.
+    """Do login.
 
     :param client: :class:`flask.Flask.test_client`
     :param url: Login url
@@ -119,20 +116,18 @@ def captured_templates(app):
 
 
 def flush_session(host='localhost', port=6379, db=10):
-    """
-    Flush session.
+    """Flush Redis session.
 
-    :param host:
-    :param port:
-    :param db:
+    :param host: Redis host
+    :param port: Redis port
+    :param db: Redis db
     """
     redis = Redis(host=host, port=int(port), db=db)
     redis.flushdb()
 
 
 def drop_all(engine):
-    """
-    Drop all tables.
+    """Drop all tables.
 
     This function is instead of `Base.metadata.drop_all()`.
     `Base.metadata.drop_all()` did not consider foreign key constraint.

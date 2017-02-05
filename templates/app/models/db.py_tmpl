@@ -136,11 +136,10 @@ Base.query = Session.query_property()
 
 
 def create(uri, **kwargs):
-    """
-    Create engine
+    """Create engine.
 
-    :param uri:
-    :param **kwargs:
+    :param uri: Database uri
+    :param **kwargs: SQLAlchemy options
     """
     if 'convert_unicode' not in kwargs:
         kwargs['convert_unicode'] = True
@@ -158,10 +157,9 @@ def create(uri, **kwargs):
 
 
 def init_engine(config):
-    """
-    Initialize SQLAlchemy engine.
+    """Initialize SQLAlchemy engine.
 
-    :param config: Flask.app.config object
+    :param config: :class:`Flask.app.config`
     """
     binds = config.get('SQLALCHEMY_BINDS', None)
 

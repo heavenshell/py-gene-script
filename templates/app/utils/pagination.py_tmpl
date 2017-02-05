@@ -16,8 +16,7 @@ from math import ceil
 
 class Pagination(object):
     def __init__(self, page, per_page, total_count):
-        """
-        Constructor.
+        """Build pagination.
 
         :param page: Current page no
         :param per_page: Per page

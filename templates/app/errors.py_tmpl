@@ -15,8 +15,7 @@ class {{project_title}}Error(Exception):
 
 
 class ApiError({{project_title}}Error):
-    """
-    Api error.
+    """Api error.
 
     see http://flask.pocoo.org/docs/patterns/apierrors/#simple-exception-class
     """
@@ -38,7 +37,7 @@ class ApiError({{project_title}}Error):
         self.payload = payload
 
     def to_dict(self):
-        """ Convert to dict. """
+        """Convert to dict."""
         rv = dict(self.payload or ())
         rv['message'] = self.message
         rv['status_code'] = self.status_code

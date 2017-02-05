@@ -31,8 +31,7 @@ __all__ = ['create_app']
 
 
 def create_app(config=None, app_name=None, modules=None, injector=None):
-    """
-    Create application.
+    """Create application.
 
     :param config: Configuration
     :param app_name: Application name
@@ -89,8 +88,7 @@ def create_app(config=None, app_name=None, modules=None, injector=None):
 
 
 def configure_settings(app, config):
-    """
-    Configure application.
+    """Configure application settings.
 
     :param app: :class:`flask.Flask`
     :param config: Configuration.
@@ -111,8 +109,7 @@ def configure_settings(app, config):
 
 
 def configure_session(app):
-    """
-    Configure Flask session.
+    """Configure Flask session.
 
     :param app: :class:`flask.Flask`
     """
@@ -130,8 +127,7 @@ def configure_session(app):
 
 
 def configure_logging(app):
-    """
-    Configure logger.
+    """Configure logger.
 
     Logger object set to utils.logging class.
 
@@ -191,8 +187,7 @@ def configure_logging(app):
 
 
 def configure_modules(app, modules):
-    """
-    Configure modules.
+    """Configure modules.
 
     :param app: :class:`flask.Flask`
     :param modules: Module list
@@ -234,8 +229,7 @@ def configure_extensions(app):
 
 
 def configure_injector(app, modules=None):
-    """
-    Configure Flask-Injector for DI Container.
+    """Configure Flask-Injector for DI Container.
 
     :param app: :class:`flask.Flask`
     :param injector: Injector module
@@ -244,8 +238,7 @@ def configure_injector(app, modules=None):
 
 
 def configure_identity(app):
-    """
-    Configure identity.
+    """Configure identity.
 
     :param app: :class:`flask.Flask`
     """
@@ -266,8 +259,7 @@ def configure_identity(app):
 
 
 def configure_i18n(app):
-    """
-    Configure Babel settings.
+    """Configure Babel settings.
 
     :param app: :class:`flask.Flask`
     """
@@ -281,8 +273,7 @@ def configure_i18n(app):
 
 
 def configure_jinja2(app):
-    """
-    Configure Jinja2 env.
+    """Configure Jinja2 env.
 
     :param app: :class:`flask.Flask`
     """
@@ -302,8 +293,7 @@ def configure_jinja2(app):
 
 
 def configure_middlewares(app):
-    """
-    Configure middlewares.
+    """Configure middlewares.
 
     Middlewares could set in settings.py.
 
@@ -324,10 +314,7 @@ def configure_middlewares(app):
 
 
 def configure_errorhandlers(app):
-    """
-    Error handler.
-
-    Handling error pages.
+    """Configure error handlers.
 
     :param app: :class:`flask.Flask`
     """

@@ -36,14 +36,14 @@ def create_generator():
 
 @manager.command
 def create_all():
-    """ Create all table. """
+    """Create all table."""
     Base.metadata.create_all(bind=session.bind)
     print('\033[32m{0}\033[0m'.format('Create database success.'))
 
 
 @manager.command
 def drop_all():
-    """ Drop all table. """
+    """Drop all table."""
     if prompt_bool('Are you sure you want to lose all your data'):
         Base.metadata.drop_all(bind=session.bind)
         print('\033[32m{0}\033[0m'.format('Drop database success.'))
@@ -51,13 +51,13 @@ def drop_all():
 
 @manager.command
 def show_urls():
-    """ Displays all of the url matching routes for the project. """
+    """Displays all of the url matching routes for the project."""
     print(app.url_map)
 
 
 @manager.command
 def shell():
-    """ Run a Python shell inside Flask application context. """
+    """Run a Python shell inside Flask application context."""
     try:
         from bpython import embed
         embed({"app": app})
@@ -67,7 +67,7 @@ def shell():
 
 @manager.command
 def rungevent(bind='127.0.0.1', port=7777):
-    """ Run a application use gevent http server. """
+    """Run a application use gevent http server."""
     from gevent import monkey
     monkey.patch_all()
     from gevent.wsgi import WSGIServer
@@ -84,7 +84,7 @@ def rungevent(bind='127.0.0.1', port=7777):
 
 @manager.command
 def view(name=''):
-    """ Create view. """
+    """Create view."""
     if name is '':
         return
 
@@ -95,7 +95,7 @@ def view(name=''):
 
 @manager.command
 def rest(name=''):
-    """ Create RESTful view. """
+    """Create RESTful view."""
     if name is '':
         return
 
@@ -106,7 +106,7 @@ def rest(name=''):
 
 @manager.command
 def model(name=''):
-    """ Create domain model. """
+    """Create domain model."""
     if name is '':
         return
 
@@ -120,7 +120,7 @@ def model(name=''):
 
 @manager.command
 def entity(name=''):
-    """ Create entity. """
+    """Create entity."""
     if name is '':
         return
 
@@ -134,7 +134,7 @@ def entity(name=''):
 
 @manager.command
 def form(name=''):
-    """ Create form. """
+    """Create form."""
     if name is '':
         return
 
@@ -148,7 +148,7 @@ def form(name=''):
 
 @manager.command
 def test(name=''):
-    """ Create test. """
+    """Create test."""
     if name is '':
         return
 

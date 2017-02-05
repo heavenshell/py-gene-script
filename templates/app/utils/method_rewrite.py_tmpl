@@ -21,8 +21,7 @@ except ImportError:
 
 class MethodRewrite(object):
     def __init__(self, app, input_name='_method'):
-        """
-        Rewrite HTTP method.
+        """Rewrite HTTP method.
 
         :param app: Flask object
         :param input_name: Hidden tag name
@@ -31,8 +30,7 @@ class MethodRewrite(object):
         self.input_name = input_name
 
     def __call__(self, environ, start_response):
-        """
-        Callable method.
+        """Callable method.
 
         :param environ:
         :param start_response:

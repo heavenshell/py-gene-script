@@ -15,7 +15,7 @@ app = Blueprint('index', __name__)
 
 @app.route('/', strict_slashes=False)
 def index():
-    """ Dispatch to root. """
+    """Dispatch to root."""
     logger = current_app.logger
     logger.debug('GET /')
 

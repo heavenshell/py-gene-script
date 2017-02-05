@@ -5,7 +5,7 @@
 
     App tests.
 
-    :copyright: (c) {{year}} Shinya Ohyanagi, All rights reserved.
+    :copyright: (c) {{year}} {{author}}, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
 import os
@@ -39,48 +39,48 @@ class TestApp(TestCase):
         self.data_dir = dirname(dirname(dirname(dirname(abspath))))
 
     def test_create_app(self):
-        """ create_app() should return Flask app object. """
+        """create_app() should return Flask app object."""
         from flask import Flask
         self.assertTrue(isinstance(self.app, Flask))
 
     def test_init_db(self):
-        """ create_app() should initialize db engine. """
+        """create_app() should initialize db engine."""
         self.assertEqual(str(get_engine().url),
                          TestDBSettings.SQLALCHEMY_DATABASE_URI)
 
     def test_settings_data_dir(self):
-        """ %(root)s should replace to root path."""
+        """%(root)s should replace to root path."""
         path = self.app.config.get('DATA_DIR')
         expected = self.data_dir + '/data/'
         self.assertEqual(expected, path)
 
     def test_data_dir_does_not_exists_in_settings(self):
-        """ Default DATA_DIR should be set if not exists in settings. """
+        """Default DATA_DIR should be set if not exists in settings."""
         config = TestMinSettings()
         app = create_app(config=config)
         expected = self.data_dir + '/data/'
         self.assertEqual(app.config['DATA_DIR'], expected)
 
     def test_app_log_does_not_exists_in_settings(self):
-        """ Default APP_LOG should be set if not exists in settings. """
+        """Default APP_LOG should be set if not exists in settings."""
         config = TestMinSettings()
         app = create_app(config=config)
         self.assertEqual(app.config['APP_LOG'], 'logs/app.log')
 
     def test_error_log_does_not_exists_in_settings(self):
-        """ Default ERROR_LOG should set if not exists in settings. """
+        """Default ERROR_LOG should set if not exists in settings."""
         config = TestMinSettings()
         app = create_app(config=config)
         self.assertEqual(app.config['ERROR_LOG'], 'logs/error.log')
 
     def test_default_logger_level_should_be_info(self):
-        """ Default logging level should be INFO. """
+        """Default logging level should be INFO."""
         config = TestMinSettings()
         app = create_app(config=config)
         self.assertEqual(app.logger.level, logging.INFO)
 
     def test_logger_level_should_be_set(self):
-        """ Logging level should be set. """
+        """Logging level should be set."""
         config = TestDBSettings()
         app = create_app(config=config)
         self.assertEqual(app.logger.level, config.LOG_LEVEL)

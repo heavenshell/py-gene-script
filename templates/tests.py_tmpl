@@ -14,5 +14,5 @@ from unittest import TestCase
 
 class Test{{klass}}(TestCase):
     def {{name}}(self):
-        """ {{name}} should fail test. """
+        """{{name}} should fail test."""
         self.fail()

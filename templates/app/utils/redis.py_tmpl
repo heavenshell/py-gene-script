@@ -13,8 +13,7 @@ from redis import StrictRedis
 
 
 def configure_redis(config, key='REDIS_SETTINGS'):
-    """
-    Create redis client.
+    """Create redis client.
 
     :param config: Config
     :param key: Key

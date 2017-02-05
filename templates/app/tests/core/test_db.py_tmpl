@@ -75,12 +75,12 @@ class EngineTest(TestCase):
             os.remove(master)
 
     def test_init_engine(self):
-        """ DB engine should create when create_app() loaded. """
+        """DB engine should create when create_app() loaded."""
         self.assertEqual(str(get_engine().url), MASTER)
         self.assertEqual(str(get_engine('slave').url), SLAVE)
 
     def test_create_engine(self):
-        """ db.create() should create DB engine. """
+        """db.create() should create DB engine."""
         uri = MASTER
         pool_recycle = 3600
         engine = create(uri, echo=False, pool_recycle=pool_recycle)
@@ -104,7 +104,7 @@ class BaseTest(TestCase):
         remove_engine()
 
     def test_model_insert(self):
-        """ Insert data from model. """
+        """Insert data from model."""
         Base.metadata.create_all()
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
@@ -116,7 +116,7 @@ class BaseTest(TestCase):
         self.assertEqual(row.first_name, foo.first_name)
 
     def test_model_find(self):
-        """ Find data by using model. """
+        """Find data by using model."""
         Base.metadata.create_all()
         foo = Person(id=1, first_name='foo')
         bar = Person(id=2, first_name='bar')
@@ -129,7 +129,7 @@ class BaseTest(TestCase):
         self.assertEqual(rows[1].first_name, bar.first_name)
 
     def test_slave_engine(self):
-        """ Insert to another database. """
+        """Insert to another database."""
         engine = get_engine('slave')
         Base.metadata.bind = get_engine('slave')
         Base.metadata.create_all()
@@ -146,6 +146,7 @@ class BaseTest(TestCase):
         remove_engine('slave')
 
     def test_query_property(self):
+        """Run query_property()."""
         Base.metadata.create_all()
         foo = Person(id=1, first_name='foo')
         session.add(foo)
@@ -161,7 +162,7 @@ class RepresentableBaseTest(TestCase):
         self.app = create_app(config=config)
 
     def test_should_repr(self):
-        """ print(SQLAlchemy.model) should output object repr. """
+        """print(SQLAlchemy.model) should output object repr."""
         p = Person(id=1, first_name='foo')
 
         data = ''

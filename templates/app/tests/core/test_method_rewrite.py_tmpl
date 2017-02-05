@@ -50,50 +50,50 @@ class TestMethodRewriteMiddleware(TestCase):
         self.client = self.app.test_client()
 
     def test_get_method(self):
-        """ GET method should dispatch to GET. """
+        """GET method should dispatch to GET."""
         ret = self.client.get('/')
         self.assertEqual(to_unicode(ret.data), 'GET')
 
     def test_post_method(self):
-        """ POST method should dispatch to POST. """
+        """POST method should dispatch to POST."""
         ret = self.client.post('/')
         self.assertEqual(to_unicode(ret.data), 'POST')
 
     def test_put_method(self):
-        """ PUT method should dispatch to PUT. """
+        """PUT method should dispatch to PUT."""
         ret = self.client.put('/')
         self.assertEqual(to_unicode(ret.data), 'PUT')
 
     def test_delete_method(self):
-        """ DELETE method should dispatch to DELETE. """
+        """DELETE method should dispatch to DELETE."""
         ret = self.client.delete('/')
         self.assertEqual(to_unicode(ret.data), 'DELETE')
 
     def test_patch_method(self):
-        """ PATCH method should dispatch to PATCH. """
+        """PATCH method should dispatch to PATCH."""
         ret = self.client.patch('/patch')
         self.assertEqual(to_unicode(ret.data), 'PATCH')
 
     def test_shoud_rewrite_post_to_put(self):
-        """ POST method should rewrite to PUT when _method parameter include. """
+        """POST method should rewrite to PUT when _method parameter include."""
         params = ImmutableMultiDict({'_method': 'PUT'})
         ret = self.client.post('/', data=params)
         self.assertEqual(to_unicode(ret.data), 'PUT')
 
     def test_shoud_rewrite_post_to_delete(self):
-        """ POST method should rewrite to DELETE when _method parameter include. """
+        """POST method should rewrite to DELETE when _method parameter include."""
         params = ImmutableMultiDict({'_method': 'DELETE'})
         ret = self.client.post('/', data=params)
         self.assertEqual(to_unicode(ret.data), 'DELETE')
 
     def test_shoud_rewrite_post_to_patch(self):
-        """ POST method should rewrite to PATCH when _method parameter include. """
+        """POST method should rewrite to PATCH when _method parameter include."""
         params = ImmutableMultiDict({'_method': 'PATCH'})
         ret = self.client.post('/patch', data=params)
         self.assertEqual(to_unicode(ret.data), 'PATCH')
 
     def test_should_be_post_when_not_rewrite_method(self):
-        """ POST should not rewrite when _method not include. """
+        """POST should not rewrite when _method not include."""
         params = ImmutableMultiDict({'method': 'PUT'})
         ret = self.client.post('/', data=params)
         self.assertEqual(to_unicode(ret.data), 'POST')

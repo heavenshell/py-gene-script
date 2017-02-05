@@ -36,7 +36,7 @@ class TestRedis(TestCase):
         self.config = self.app.config
 
     def test_should_create_redis_instance(self):
-        """ configure(config) should create Redis client. """
+        """configure(config) should create Redis client."""
         client = configure_redis(self.config)
         from redis import StrictRedis
         self.assertTrue(isinstance(client, StrictRedis))
@@ -50,7 +50,7 @@ class TestRedisDefault(TestCase):
         self.config = self.app.config
 
     def test_should_create_redis_instance(self):
-        """ configure(config) should create Redis client by default settings. """
+        """configure(config) should create Redis client by default settings."""
         client = configure_redis(self.config)
         from redis import StrictRedis
         self.assertTrue(isinstance(client, StrictRedis))

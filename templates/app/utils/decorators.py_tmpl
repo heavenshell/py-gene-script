@@ -14,7 +14,7 @@ from flask import request, current_app, render_template
 
 
 def jsonp(func):
-    """ Wraps JSONified output for JSONP requests. """
+    """Wraps JSONified output for JSONP requests."""
     @wraps(func)
     def decorated_function(*args, **kwargs):
         callback = request.args.get('callback', False)
@@ -29,10 +29,9 @@ def jsonp(func):
 
 
 def render(template=None):
-    """
-    Render template.
+    """Render template.
 
-    :param template:
+    :param template: Template file name
     """
     def decorator(f):
         @wraps(f)
