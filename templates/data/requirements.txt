@@ -13,6 +13,7 @@ simplejson
 alembic
 PyMySQL
 SQLAlchemy
+sqlalchemy-repr
 redis
 bpmappers
 nose

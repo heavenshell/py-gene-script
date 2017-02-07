@@ -26,10 +26,13 @@
 import re
 import warnings
 from contextlib import contextmanager
+
 from werkzeug.urls import url_parse
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy_repr import RepresentableBase
+
 from {{project}}.utils.compat import iteritems, PY2
 
 __all__ = ['Base', 'Session', 'session', 'init_engine', 'get_engine']
@@ -37,28 +40,10 @@ __all__ = ['Base', 'Session', 'session', 'init_engine', 'get_engine']
 r = re.compile(r'[^mysql+pymysql].[?|&]use_unicode=')
 
 
-class RepresentableBase(object):
+class MySqlRepresentableBase(RepresentableBase):
     #: MySQL's specific args.
     #: Declare for table creation.
     __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_row_format': 'DYNAMIC'}
-
-    def __repr__(self):
-        """
-        Dump all primary keys and columns.
-
-        Referanced by:
-          - https://gist.github.com/exhuma/5935162#file-representable_base-py
-          - http://stackoverflow.com/a/15929677
-        """
-        #: Columns.
-        columns = ', '.join([
-            '{0}={1}'.format(k, repr(self.__dict__[k]))
-            for k in self.__dict__.keys() if k[0] != '_']
-        )
-
-        return '<{0}({1})>'.format(
-            self.__class__.__name__, columns
-        )
 
 
 class AttributeContainer(object):
@@ -74,6 +59,7 @@ sessions = AttributeContainer()
 
 def set_default_engine(engine):
     engines.default = engine
+    bases.default.query = Session.query_property()
     bases.default.metadata.bind = engine
     sessions.default.remove()
     sessions.default.configure(bind=engine)
@@ -84,7 +70,7 @@ def reset():
     bases._clear()
     sessions._clear()
     engines.default = None
-    bases.default = declarative_base(cls=RepresentableBase)
+    bases.default = declarative_base(cls=MySqlRepresentableBase)
     sm = sessionmaker(extension=[], expire_on_commit=False)
     sessions.default = scoped_session(sm)
 
