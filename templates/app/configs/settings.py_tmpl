@@ -78,11 +78,12 @@ class DevelopmentSettings(Settings):
     #: Debug mode
     DEBUG = True
     LOG_LEVEL = logging.DEBUG
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///./var/{{project}}.sqlite'
 
 
 class TestSettings(Settings):
     #: If Python runtime is Python2.7 add ``&use_unicode=0``.
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{{project}}:{{project}}@localhost/{{project}}_test?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_POOL_SIZE = None
     SQLALCHEMY_POOL_TIMEOUT = None

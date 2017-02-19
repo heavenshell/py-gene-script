@@ -12,6 +12,7 @@
 """
 import os
 from flask_script import Manager, prompt_bool
+from sqlalchemy_seed import load_fixtures, load_fixture_files
 from {{project}}.app import create_app
 from {{project}}.models.db import session, Base
 
@@ -66,6 +67,19 @@ def shell():
         embed({"app": app})
     except:
         pass
+
+
+@manager.command
+def loaddata(filename=''):
+    """Load seed data."""
+    if filename == '':
+        return
+
+    from tabetii.models.db import session
+    path = os.path.join(app.root_path, 'fixtures')
+
+    fixtures = load_fixture_files(path, [filename])
+    load_fixtures(session, fixtures)
 
 
 @manager.command

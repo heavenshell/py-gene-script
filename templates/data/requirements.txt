@@ -9,13 +9,16 @@ Flask-Script
 Flask-WTF
 gunicorn
 meinheld
+marshmallow
+marshmallow-sqlalchemy
+marshmallow-flask
 simplejson
 alembic
 PyMySQL
 SQLAlchemy
 sqlalchemy-repr
+sqlalchemy-seed
 redis
-bpmappers
 nose
 tox
 mock
@@ -23,3 +26,4 @@ autopep8
 factory_boy
 fakeredis
 faker
+flake8
