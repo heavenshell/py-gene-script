@@ -257,9 +257,15 @@ class Generator(object):
         self.recrsive(project_name, project_path)
 
         default_files = [
-            'manage.py_tmpl', 'LICENSE.txt_tmpl', 'MANIFEST.in_tmpl',
-            'README.rst_tmpl', 'setup.py_tmpl', 'tox.ini_tmpl',
-            'babel.cfg_tmpl', 'setup.cfg_tmpl'
+            'babel.cfg_tmpl',
+            'LICENSE.txt_tmpl',
+            'manage.py_tmpl',
+            'MANIFEST.in_tmpl',
+            'README.rst_tmpl',
+            'requirements.txt_tmpl',
+            'setup.py_tmpl',
+            'tox.ini_tmpl',
+            'setup.cfg_tmpl'
         ]
         for fname in default_files:
             src = os.path.join(self.tmpl_path, fname)
@@ -296,12 +302,13 @@ class Generator(object):
 
         output(green(create_message.format('data', self.file_path)))
 
-        dst = os.path.join(self.file_path, 'data')
-        shutil.copytree(os.path.join(self.tmpl_path, 'data'), dst)
-        self.recrsive(project_name, dst)
+        for d in ['data', 'requirements']:
+            dst = os.path.join(self.file_path, d)
+            shutil.copytree(os.path.join(self.tmpl_path, d), dst)
+            self.recrsive(project_name, dst)
 
         output(green('Create project success.'))
-        msg = 'Type pip install -r data/requirement.txt to install packages.'
+        msg = 'Type pip install -r requirement.txt to install packages.'
         output(grey(msg))
 
     def create_file(self, project_name, file_name, category, src=None):

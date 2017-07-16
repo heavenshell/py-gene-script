@@ -1,0 +1,13 @@
+autopep8
+factory_boy
+faker
+fakeredis
+flake8
+flake8-print
+flake8-strict
+flake8-string-format
+freezegun
+pyflakes
+mock
+nose
+tox
