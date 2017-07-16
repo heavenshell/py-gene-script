@@ -156,6 +156,10 @@ def init_engine(config):
 
     uri = config.get('SQLALCHEMY_DATABASE_URI')
     is_sqlite = uri.startswith('sqlite://')
+    if is_sqlite:
+        from sqlalchemy.pool import StaticPool
+        config['poolclass'] = StaticPool
+
     pool_size = config.get('SQLALCHEMY_POOL_SIZE', None)
     if pool_size is not None and not is_sqlite:
         configs['pool_size'] = pool_size
